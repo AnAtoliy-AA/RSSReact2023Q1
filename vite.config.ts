@@ -3,7 +3,7 @@ import react from '@vitejs/plugin-react-swc';
 import { ghPages } from 'vite-plugin-gh-pages';
 import EnvironmentPlugin from 'vite-plugin-environment';
 import * as path from 'path';
-import { BASE_URL } from './src/constants/baseUrl';
+import BASE_URL from './src/constants/baseUrl';
 
 export enum AliasPath {
   ROUTES = 'routes',

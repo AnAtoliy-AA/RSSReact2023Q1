@@ -1,8 +1,9 @@
 import React from 'react';
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import { NotFoundPage } from '@pages/notFoundPage.tsx/notFoundPage';
+import BASE_URL from '@constants/baseUrl';
 
-const baseUrl = process.env.BASE_URL ?? import.meta.env.BASE_URL;
+const baseUrl = process.env.BASE_URL ?? BASE_URL;
 
 export enum AppPath {
   HOME = '',
@@ -15,13 +16,13 @@ export const NOT_FOUND_PATH = '*';
 
 function Router(): JSX.Element {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path={HOME_PATH} element={<>H</>} />
         <Route path={LETTERS_PATH} element={<>L</>} />
         <Route path={NOT_FOUND_PATH} element={<NotFoundPage />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 

@@ -3,6 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://AnAtoliyAK.github.io/RSSReact2023Q1/#",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -15,7 +16,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.8.2"
+    "react-router-dom": "^6.6.2"
   },
   "devDependencies": {
     "@types/node": "^18.14.5",
