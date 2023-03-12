@@ -1,6 +1,9 @@
 {
     "parser": "@typescript-eslint/parser",
     "extends": [
+        "airbnb",
+        "airbnb/hooks",
+        "airbnb-typescript",
         "plugin:react/recommended",
         "plugin:@typescript-eslint/recommended",
         "prettier",
@@ -19,7 +22,8 @@
             "jsx": true
         },
         "ecmaVersion": "latest",
-        "sourceType": "module"
+        "sourceType": "module",
+        "project": "./tsconfig.json"
     },
     "plugins": [
         "@typescript-eslint",

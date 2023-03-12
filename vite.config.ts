@@ -1,4 +1,5 @@
-import { defineConfig } from 'vite';
+/* eslint-disable import/no-extraneous-dependencies */
+import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
 import { ghPages } from 'vite-plugin-gh-pages';
 import EnvironmentPlugin from 'vite-plugin-environment';
@@ -35,5 +36,10 @@ export default defineConfig({
   base: BASE_URL,
   resolve: {
     alias: aliasPathResolvers,
+  },
+  test: {
+    globals: true,
+    environment: 'jsdom',
+    setupFiles: ['./src/tests/setupTest.ts'],
   },
 });
