@@ -1,4 +1,3 @@
-/* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
 import { ghPages } from 'vite-plugin-gh-pages';
@@ -16,6 +15,7 @@ export enum AliasPath {
   HOOKS = 'hooks',
   DATA = 'data',
   SERVICES = 'services',
+  UTILS = 'utils',
 }
 
 interface IAliasPathResolver {
