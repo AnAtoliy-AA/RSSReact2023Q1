@@ -84,10 +84,11 @@ const darkPalette = {
 
 const darkTheme = {
   primary: {
-    text: darkPalette.primary[OpacityVars.MAX],
+    text: darkPalette.primary[OpacityVars.PRE_MAX],
   },
   neutral: {
     background: darkPalette.neutral[OpacityVars.MAX],
+    button_background: darkPalette.neutral[OpacityVars.PRE_MAX],
   },
   danger: {
     text: darkPalette.danger[OpacityVars.BIG],

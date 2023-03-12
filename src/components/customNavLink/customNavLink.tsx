@@ -6,6 +6,7 @@ import color from '@utils/styles/stylesUtils';
 
 const StyledNavLink = styled.button`
   max-height: 2rem;
+  background-color: ${color('neutral.button_background')};
 
   .active {
     color: ${color('danger.text')};
