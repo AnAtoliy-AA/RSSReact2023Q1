@@ -84,7 +84,7 @@ Error generating stack: `+o.message+`
   .unselected {
     color: ${xa("info.text")};
   }
-`;function Xs(e){const{to:t,children:n}=e;return J.jsx(dv,{children:J.jsx(cv,{to:t,className:({isActive:r})=>`nav-link${r?" active":" unselected"}`,children:n})})}const pv=kd.header`
+`;function Xs(e){const{to:t,children:n}=e;return J.jsx(dv,{children:J.jsx(cv,{to:t,className:({isActive:r})=>`nav-link ${r?"active":"unselected"}`,children:n})})}const pv=kd.header`
   display: flex;
   align-items: center;
   min-height: 8vh;
