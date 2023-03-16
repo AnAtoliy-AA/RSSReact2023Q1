@@ -1,4 +1,3 @@
-import * as React from 'react';
 import styled from 'styled-components';
 import APP_PATHS from '@constants/appPath/appPath';
 import CustomNavLink from '@components/customNavLink/customNavLink';

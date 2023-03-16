@@ -5,7 +5,7 @@
   "type": "module",
   "homepage": "https://anatoliyak.github.io/RSSReact2023Q1/#/myApp/",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --open",
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint src/**/*.{js,jsx,ts,tsx,json}",
