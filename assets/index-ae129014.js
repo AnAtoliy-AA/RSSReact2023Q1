@@ -173,7 +173,7 @@ Error generating stack: `+i.message+`
       font-size: 1.2rem;
     }
   }
-`;function tc(e){const{to:t,children:n}=e;return I.jsx(Xv,{children:I.jsx(kv,{to:t,className:({isActive:r})=>`nav-link ${r?"active":"unselected"}`,children:n})})}function Zv(e){return function(t){const n=bn();return I.jsx(e,{location:n,...t})}}const mo=ce.h1`
+`;function tc(e){const{to:t,children:n}=e;return I.jsx(Xv,{children:I.jsx(kv,{to:t,className:({isActive:r})=>`nav-link ${r?"active":"unselected"}`,children:n})})}function Zv(e){return function(){const n=bn();return I.jsx(e,{location:n})}}const mo=ce.h1`
   color: ${at("neutral.title")};
   text-align: center;
   flex-grow: 1;
