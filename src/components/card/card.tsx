@@ -1,6 +1,8 @@
-import { NOT_AVAILABLE_TEXT } from '@constants/common/common';
 import color from '@utils/styles/stylesUtils';
+import React from 'react';
 import styled from 'styled-components';
+import BackCardSide from './backSide';
+import FrontCardSide from './frontSide';
 
 export interface CardProps {
   title?: string;
@@ -10,77 +12,62 @@ export interface CardProps {
   publishedAt?: string;
 }
 
-const CardContainer = styled.div`
-  max-width: 25vw;
-  height: 400px;
-  margin: 10px;
-  text-align: center;
-  border-radius: 1rem;
-  padding: 0.5rem;
-  background-color: ${color('neutral.card_background')};
-`;
-
-const CardTitle = styled.h2`
-  color: ${color('neutral.card_title')};
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
-
-const CardSubtitle = styled.h4`
-  color: ${color('neutral.card_title')};
-`;
-
-const ImageWrapper = styled.div`
-  width: 100%;
-
-  img {
-    width: 100%;
-    filter: grayscale();
-  }
-`;
-
-const CardContent = styled.div`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
-const CardDescription = styled.p`
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-`;
-
-const CardDate = styled.div``;
-
-function Card(props: CardProps) {
-  const { title, channelTitle, imageUrl, description, publishedAt } = props;
-
-  return (
-    <CardContainer>
-      <CardTitle>{title}</CardTitle>
-      <CardSubtitle>by: {channelTitle}</CardSubtitle>
-      <ImageWrapper>
-        <img src={imageUrl} alt={title} />
-      </ImageWrapper>
-      <CardContent>
-        <CardDescription>{description}</CardDescription>
-        <CardDate>{publishedAt}</CardDate>
-      </CardContent>
-    </CardContainer>
-  );
+interface ICardState {
+  isFrontShown: boolean;
 }
 
-Card.defaultProps = {
-  title: NOT_AVAILABLE_TEXT,
-  channelTitle: NOT_AVAILABLE_TEXT,
-  imageUrl: NOT_AVAILABLE_TEXT,
-  description: NOT_AVAILABLE_TEXT,
-  publishedAt: NOT_AVAILABLE_TEXT,
-};
+interface IContainerProps {
+  isFrontShown: boolean;
+}
+
+const CardContainer = styled.div<IContainerProps>`
+  position: relative;
+  width: 20rem;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: 0.5rem;
+  border: 0.2rem solid ${color('neutral.card_title')};
+  border-radius: 1rem;
+  user-select: none;
+  transform-style: preserve-3d;
+  transform: rotateY(${(props: IContainerProps) => (props.isFrontShown ? '0deg' : '180deg')});
+  transition: 300ms;
+  background-color: ${color('neutral.card_background')};
+  cursor: pointer;
+`;
+
+class Card extends React.Component<CardProps, ICardState> {
+  constructor(props: CardProps | Readonly<CardProps>) {
+    super(props);
+    this.state = { isFrontShown: true };
+  }
+
+  handleRotate = () => {
+    const { isFrontShown } = this.state;
+
+    this.setState({ isFrontShown: !isFrontShown });
+  };
+
+  render() {
+    const { isFrontShown } = this.state;
+    const { title, channelTitle, imageUrl, description, publishedAt } = this.props;
+
+    return (
+      <CardContainer isFrontShown={isFrontShown} onClick={this.handleRotate}>
+        <FrontCardSide
+          title={title}
+          description={description}
+          imageUrl={imageUrl}
+          publishedAt={publishedAt}
+          channelTitle={channelTitle}
+        />
+        <BackCardSide title={title} description={description} />
+      </CardContainer>
+    );
+  }
+}
 
 export default Card;
