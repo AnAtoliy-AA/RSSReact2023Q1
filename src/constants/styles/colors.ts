@@ -97,7 +97,7 @@ const darkTheme = {
     text: darkPalette.danger[OpacityVars.BIG],
   },
   info: {
-    text: darkPalette.info[OpacityVars.PRE_MAX],
+    text: darkPalette.info[OpacityVars.MIN],
   },
 };
 

@@ -2,11 +2,26 @@ import LocalStorageService, {
   DEFAULT_LOCAL_STORAGE_KEY,
 } from '@services/localStorage/localStorage.service';
 import React, { ChangeEvent } from 'react';
+import styled from 'styled-components';
 
 type SearchBarProps = object;
 type SearchBarState = {
   searchValue: string;
 };
+
+const SearchContainer = styled.div`
+  flex-grow: 3;
+  text-align: center;
+`;
+
+const SearchBarInput = styled.input`
+  font-size: 1.5rem;
+  margin: 0.5rem;
+
+  @media (min-width: 796px) {
+    margin-left: 15rem;
+  }
+`;
 
 class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
   constructor(props: SearchBarProps | Readonly<SearchBarProps>) {
@@ -39,7 +54,11 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
   render() {
     const { searchValue } = this.state;
 
-    return <input value={searchValue} onChange={this.handleInputChange} />;
+    return (
+      <SearchContainer>
+        <SearchBarInput value={searchValue} onChange={this.handleInputChange} />
+      </SearchContainer>
+    );
   }
 }
 
