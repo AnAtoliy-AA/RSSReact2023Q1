@@ -5,7 +5,15 @@ import color from '@utils/styles/stylesUtils';
 import styled from 'styled-components';
 
 const CardContainer = styled.div`
-  background-color: ${color('neutral.button_background')};
+  background-color: ${color('neutral.background')};
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+`;
+
+const PageTitle = styled.h2`
+  color: ${color('neutral.title')};
+  text-align: center;
 `;
 
 function MainPage() {
@@ -13,7 +21,7 @@ function MainPage() {
 
   return (
     <div>
-      <h2>CUSTOM MAIN PAGE</h2>
+      <PageTitle>CUSTOM MAIN PAGE</PageTitle>
       <CardContainer>
         {formattedCards?.map((cardValues) => {
           const { id, title, description, imageUrl, publishedAt, channelTitle } = cardValues;

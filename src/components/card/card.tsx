@@ -11,16 +11,49 @@ export interface CardProps {
 }
 
 const CardContainer = styled.div`
-  background-color: ${color('neutral.button_background')};
+  max-width: 25vw;
+  height: 400px;
+  margin: 10px;
+  text-align: center;
+  border-radius: 1rem;
+  padding: 0.5rem;
+  background-color: ${color('neutral.card_background')};
 `;
 
-const CardTitle = styled.h3``;
+const CardTitle = styled.h2`
+  color: ${color('neutral.card_title')};
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
 
-const CardContent = styled.div``;
+const CardSubtitle = styled.h4`
+  color: ${color('neutral.card_title')};
+`;
 
-const CardSubtitle = styled.h4``;
+const ImageWrapper = styled.div`
+  width: 100%;
 
-const CardDescription = styled.p``;
+  img {
+    width: 100%;
+    filter: grayscale();
+  }
+`;
+
+const CardContent = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const CardDescription = styled.p`
+  width: 100%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+`;
 
 const CardDate = styled.div``;
 
@@ -31,7 +64,9 @@ function Card(props: CardProps) {
     <CardContainer>
       <CardTitle>{title}</CardTitle>
       <CardSubtitle>by: {channelTitle}</CardSubtitle>
-      <img src={imageUrl} alt={title} />
+      <ImageWrapper>
+        <img src={imageUrl} alt={title} />
+      </ImageWrapper>
       <CardContent>
         <CardDescription>{description}</CardDescription>
         <CardDate>{publishedAt}</CardDate>
