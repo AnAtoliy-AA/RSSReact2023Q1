@@ -21,7 +21,7 @@ function MainPage() {
 
   return (
     <div>
-      <PageTitle>CUSTOM MAIN PAGE</PageTitle>
+      <PageTitle>MAIN PAGE</PageTitle>
       <CardContainer>
         {formattedCards?.map((cardValues) => {
           const { id, title, description, imageUrl, publishedAt, channelTitle } = cardValues;
