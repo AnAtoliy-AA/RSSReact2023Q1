@@ -150,7 +150,7 @@ Error generating stack: `+i.message+`
   display: flex;
   flex-direction: column;
   justify-content: center;
-`;function Zv(){return A.jsx(Xv,{children:A.jsxs(A.Fragment,{children:[A.jsx("p",{children:"Developed by: "}),A.jsx("p",{children:"Anatoliy Aliaksandrau - Front End React Developer"}),A.jsx("p",{children:A.jsx("a",{href:"https://github.com/AnAtoliyAK",children:A.jsx("img",{src:Kv,alt:"GitHub Logo",title:"Anantoliy Aliaksandrau Github"})})}),A.jsx("p",{children:A.jsx("a",{href:"https://www.linkedin.com/in/anatoliy-aliaksandrau/",children:A.jsx("img",{src:Yv,alt:"LinkedIn Logo",title:"Anantoliy Aliaksandrau LinkedIn"})})}),A.jsx("p",{children:A.jsx("a",{href:"https://app.rs.school/registry/student",children:"© RSSchool 2023"})})]})})}const Jv=ce.button`
+`;function Zv(){return A.jsx(Xv,{children:A.jsxs(A.Fragment,{children:[A.jsx("p",{children:"Developed by: "}),A.jsx("p",{children:"Anatoliy Aliaksandrau - Front End React Developer"}),A.jsx("p",{children:A.jsx("a",{href:"https://github.com/AnAtoliyAK",children:A.jsx("img",{src:Kv,alt:"GitHub Logo",title:"Anantoliy Aliaksandrau Github"})})}),A.jsx("p",{children:A.jsx("a",{href:"https://www.linkedin.com/in/anatoliy-aliaksandrau/",children:A.jsx("img",{src:Yv,alt:"LinkedIn Logo",title:"Anantoliy Aliaksandrau LinkedIn"})})}),A.jsx("p",{children:A.jsx("a",{href:"https://rs.school/",children:"© RSSchool 2023"})})]})})}const Jv=ce.button`
   max-height: 4rem;
   border-radius: 1.5rem;
   padding: 0.5rem 1rem;
