@@ -17,6 +17,7 @@ export enum AliasPath {
   SERVICES = 'services',
   UTILS = 'utils',
   API = 'api',
+  HOC = 'hoc',
 }
 
 interface IAliasPathResolver {

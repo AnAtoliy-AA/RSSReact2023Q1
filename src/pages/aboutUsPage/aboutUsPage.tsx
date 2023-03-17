@@ -1,4 +1,3 @@
-import color from '@utils/styles/stylesUtils';
 import styled from 'styled-components';
 import GitHubLogo from '@assets/icons/github.svg';
 import LinkedInLogo from '@assets/icons/linkedin.svg';
@@ -11,15 +10,9 @@ const PageContainer = styled.div`
   justify-content: center;
 `;
 
-const PageTitle = styled.h2`
-  color: ${color('neutral.title')};
-  text-align: center;
-`;
-
 function AboutUsPage() {
   return (
     <PageContainer>
-      <PageTitle>ABOUT US</PageTitle>
       <>
         <p>Developed by: </p>
         <p>Anatoliy Aliaksandrau - Front End React Developer</p>

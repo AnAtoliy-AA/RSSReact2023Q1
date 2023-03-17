@@ -1,14 +1,14 @@
 import styled from 'styled-components';
 import APP_PATHS from '@constants/appPath/appPath';
 import CustomNavLink from '@components/customNavLink/customNavLink';
-import SearchBar from '@components/searchBar/searchBar';
+import ShowTheLocationWithRouter from '@components/showLocation/showLocation';
 
 const HeaderStyles = styled.header`
   display: flex;
   align-items: center;
   min-height: 8vh;
   flex-wrap: wrap;
-  justify-content: space-between;
+  justify-content: flex-end;
 `;
 
 const NavContainer = styled.div`
@@ -20,7 +20,7 @@ const NavContainer = styled.div`
 function Header() {
   return (
     <HeaderStyles>
-      <SearchBar />
+      <ShowTheLocationWithRouter />
       <NavContainer>
         <CustomNavLink to={APP_PATHS.HOME}>Home</CustomNavLink>
         <CustomNavLink to={APP_PATHS.ABOUT}>About</CustomNavLink>

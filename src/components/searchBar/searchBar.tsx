@@ -17,10 +17,6 @@ const SearchContainer = styled.div`
 const SearchBarInput = styled.input`
   font-size: 1.5rem;
   margin: 0.5rem;
-
-  @media (min-width: 796px) {
-    margin-left: 15rem;
-  }
 `;
 
 class SearchBar extends React.Component<SearchBarProps, SearchBarState> {

@@ -1,4 +1,5 @@
 import Card from '@components/card/card';
+import SearchBar from '@components/searchBar/searchBar';
 import mockSearchItems from '@constants/mock/mockSearchResults';
 import CardService from '@services/card/card.service';
 import color from '@utils/styles/stylesUtils';
@@ -11,17 +12,12 @@ const CardContainer = styled.div`
   justify-content: space-around;
 `;
 
-const PageTitle = styled.h2`
-  color: ${color('neutral.title')};
-  text-align: center;
-`;
-
 function MainPage() {
   const formattedCards = CardService.formatCardsData(mockSearchItems);
 
   return (
     <div>
-      <PageTitle>MAIN PAGE</PageTitle>
+      <SearchBar />
       <CardContainer>
         {formattedCards?.map((cardValues) => {
           const { id, title, description, imageUrl, publishedAt, channelTitle } = cardValues;
