@@ -27,7 +27,7 @@ function AboutUsPage() {
           </a>
         </p>
         <p>
-          <a href="https://app.rs.school/registry/student">© RSSchool 2023</a>
+          <a href="https://rs.school/">© RSSchool 2023</a>
         </p>
       </>
     </PageContainer>

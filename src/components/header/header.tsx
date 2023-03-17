@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import APP_PATHS from '@constants/appPath/appPath';
 import CustomNavLink from '@components/customNavLink/customNavLink';
 import ShowTheLocationWithRouter from '@components/showLocation/showLocation';
+import color from '@utils/styles/stylesUtils';
 
 const HeaderStyles = styled.header`
   display: flex;
@@ -9,6 +10,7 @@ const HeaderStyles = styled.header`
   min-height: 8vh;
   flex-wrap: wrap;
   justify-content: flex-end;
+  border-bottom: 2px solid ${color('neutral.card_title')};
 `;
 
 const NavContainer = styled.div`
