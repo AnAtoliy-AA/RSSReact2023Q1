@@ -92,6 +92,7 @@ const darkTheme = {
     card_background: darkPalette.neutral[OpacityVars.PRE_MIN],
     card_title: darkPalette.neutral[OpacityVars.PRE_MAX],
     title: darkPalette.neutral[OpacityVars.MEDIUM],
+    shadow: darkPalette.neutral[OpacityVars.MIN],
   },
   danger: {
     text: darkPalette.danger[OpacityVars.BIG],

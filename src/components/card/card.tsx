@@ -36,6 +36,7 @@ const CardContainer = styled.div<IContainerProps>`
   transform: rotateY(${(props: IContainerProps) => (props.isFrontShown ? '0deg' : '180deg')});
   transition: 300ms;
   background-color: ${color('neutral.card_background')};
+  box-shadow: 5px ${color('neutral.shadow')};
   cursor: pointer;
 `;
 
