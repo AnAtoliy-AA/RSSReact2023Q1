@@ -71,13 +71,13 @@ function FrontCardSide(props: CardProps) {
 
   return (
     <FrontSideContainer>
-      <FrontCardTitle>{title}</FrontCardTitle>
-      <CardSubtitle>by: {channelTitle}</CardSubtitle>
+      <FrontCardTitle title={title}>{title}</FrontCardTitle>
+      <CardSubtitle title={channelTitle}>by: {channelTitle}</CardSubtitle>
       <ImageWrapper>
         <img src={imageUrl} alt={title} />
       </ImageWrapper>
       <CardContent>
-        <CardDescription>{description}</CardDescription>
+        <CardDescription title={description}>{description}</CardDescription>
         <CardDate>{publishedAt}</CardDate>
       </CardContent>
     </FrontSideContainer>
