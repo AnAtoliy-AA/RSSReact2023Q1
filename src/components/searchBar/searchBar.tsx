@@ -1,15 +1,16 @@
+import { ChangeEvent, Component, FormEvent } from 'react';
+import styled from 'styled-components';
 import LocalStorageService, {
   DEFAULT_LOCAL_STORAGE_KEY,
 } from '@services/localStorage/localStorage.service';
-import React, { ChangeEvent } from 'react';
-import styled from 'styled-components';
+import color from '@utils/styles/stylesUtils';
 
 type SearchBarProps = object;
 type SearchBarState = {
   searchValue: string;
 };
 
-const SearchContainer = styled.div`
+const SearchContainer = styled.form`
   flex-grow: 3;
   text-align: center;
 `;
@@ -19,7 +20,20 @@ const SearchBarInput = styled.input`
   margin: 0.5rem;
 `;
 
-class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
+const SearchBarButton = styled.button`
+  max-height: 4rem;
+  border-radius: 1.5rem;
+  padding: 0.5rem 1rem;
+  background-color: ${color('neutral.button_background')};
+  color: ${color('neutral.button_text')};
+`;
+
+// TODO move this method into class when it'll do something
+const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
+  event.preventDefault();
+};
+
+class SearchBar extends Component<SearchBarProps, SearchBarState> {
   constructor(props: SearchBarProps | Readonly<SearchBarProps>) {
     super(props);
     this.state = { searchValue: LocalStorageService.getItem(DEFAULT_LOCAL_STORAGE_KEY) || '' };
@@ -51,8 +65,9 @@ class SearchBar extends React.Component<SearchBarProps, SearchBarState> {
     const { searchValue } = this.state;
 
     return (
-      <SearchContainer>
+      <SearchContainer onSubmit={handleOnSubmit}>
         <SearchBarInput value={searchValue} onChange={this.handleInputChange} />
+        <SearchBarButton type="submit">Search</SearchBarButton>
       </SearchContainer>
     );
   }

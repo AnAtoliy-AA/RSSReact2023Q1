@@ -89,6 +89,7 @@ const darkTheme = {
   neutral: {
     background: darkPalette.neutral[OpacityVars.MAX],
     button_background: darkPalette.neutral[OpacityVars.PRE_MAX],
+    button_text: darkPalette.neutral[OpacityVars.MIN],
     card_background: darkPalette.neutral[OpacityVars.PRE_MIN],
     card_title: darkPalette.neutral[OpacityVars.PRE_MAX],
     title: darkPalette.neutral[OpacityVars.MEDIUM],
