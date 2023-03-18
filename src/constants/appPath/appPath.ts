@@ -1,8 +1,6 @@
-import BASE_URL from '@constants/baseUrl';
+const baseUrl = process.env.BASE_URL;
 
-const baseUrl = process.env.BASE_URL ?? BASE_URL;
-
-const HOME_PATH = baseUrl;
+const HOME_PATH = `${baseUrl}`;
 const ABOUT_PATH = `${baseUrl}about`;
 const NOT_FOUND_PATH = '*';
 const BASE_PATH = '/';

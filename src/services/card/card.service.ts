@@ -11,7 +11,7 @@ class CardService {
   }
 
   private static formatCardData(item: ISearchItem): CardValues {
-    const { snippet } = item || {};
+    const { snippet } = item;
     const { title, description, channelTitle, publishedAt, thumbnails } = snippet || {};
     const imageUrl = thumbnails?.medium?.url || '';
     const id = item?.id?.videoId || `${title}_${channelTitle}`;

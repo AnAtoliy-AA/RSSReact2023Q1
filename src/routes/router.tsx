@@ -11,6 +11,7 @@ function Router(): JSX.Element {
       <Route path={APP_PATHS.BASE} element={<Layout />}>
         <Route path={APP_PATHS.HOME} element={<MainPage />} />
         <Route path={APP_PATHS.ABOUT} element={<AboutUsPage />} />
+        <Route index element={<NotFoundPage />} />
         <Route path={APP_PATHS.NOT_FOUND} element={<NotFoundPage />} />
       </Route>
     </Routes>

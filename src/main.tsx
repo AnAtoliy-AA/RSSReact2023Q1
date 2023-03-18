@@ -10,6 +10,7 @@ const GlobalStyle = createGlobalStyle`
     ${createCssVars(darkTheme)};
     background-color: ${color('neutral.background')};
     color: ${color('primary.text')};
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
   }
 `;
 
