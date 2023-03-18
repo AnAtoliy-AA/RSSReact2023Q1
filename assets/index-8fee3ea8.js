@@ -116,7 +116,7 @@ Error generating stack: `+o.message+`
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
-`,jv=oe.div``;function Dd(e){const{title:t,channelTitle:n,imageUrl:r,description:l,publishedAt:o}=e;return L.jsxs(_v,{children:[L.jsx(Rv,{children:t}),L.jsxs(Nv,{children:["by: ",n]}),L.jsx(Tv,{children:L.jsx("img",{src:r,alt:t})}),L.jsxs(Lv,{children:[L.jsx(Ov,{children:l}),L.jsx(jv,{children:o})]})]})}Dd.defaultProps={title:ln,channelTitle:ln,imageUrl:ln,description:ln,publishedAt:ln};const Av=oe($d)`
+`,jv=oe.div``;function Dd(e){const{title:t,channelTitle:n,imageUrl:r,description:l,publishedAt:o}=e;return L.jsxs(_v,{children:[L.jsx(Rv,{title:t,children:t}),L.jsxs(Nv,{title:n,children:["by: ",n]}),L.jsx(Tv,{children:L.jsx("img",{src:r,alt:t})}),L.jsxs(Lv,{children:[L.jsx(Ov,{title:l,children:l}),L.jsx(jv,{children:o})]})]})}Dd.defaultProps={title:ln,channelTitle:ln,imageUrl:ln,description:ln,publishedAt:ln};const Av=oe($d)`
   transform: rotateY(180deg);
 `,Iv=oe.p`
   width: 100%;
