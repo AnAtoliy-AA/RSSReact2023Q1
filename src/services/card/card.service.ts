@@ -1,7 +1,7 @@
 import { CardProps } from '@components/card/card';
 import { ISearchItem } from '@api/types/searchResults';
 
-interface CardValues extends CardProps {
+export interface ICardValues extends CardProps {
   id: string;
 }
 
@@ -10,7 +10,7 @@ class CardService {
     return data.map((item: ISearchItem) => this.formatCardData(item));
   }
 
-  private static formatCardData(item: ISearchItem): CardValues {
+  private static formatCardData(item: ISearchItem): ICardValues {
     const { snippet } = item;
     const { title, description, channelTitle, publishedAt, thumbnails } = snippet || {};
     const imageUrl = thumbnails?.medium?.url || '';

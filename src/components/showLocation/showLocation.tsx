@@ -26,6 +26,9 @@ class ShowLocation extends React.PureComponent<RouterProps> {
       case APP_PATHS.ABOUT:
         return <PageTitle>ABOUT PAGE</PageTitle>;
 
+      case APP_PATHS.CREATE_CARDS:
+        return <PageTitle>CREATE CARD PAGE</PageTitle>;
+
       default:
         return <PageTitle>NOT FOUND PAGE</PageTitle>;
     }

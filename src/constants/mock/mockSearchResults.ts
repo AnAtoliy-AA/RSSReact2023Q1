@@ -3,6 +3,54 @@
 
 import { ISearchItem } from '@api/types/searchResults';
 
+export const EMPTY_ITEM: ISearchItem = {
+  kind: '',
+  etag: '',
+  id: {
+    kind: '',
+    videoId: '',
+  },
+  snippet: {
+    publishedAt: '',
+    channelId: '',
+    title: '',
+    description: '',
+    thumbnails: {
+      default: {
+        url: '',
+        width: 0,
+        height: 0,
+      },
+      medium: {
+        url: '',
+        width: 0,
+        height: 0,
+      },
+      high: {
+        url: '',
+        width: 0,
+        height: 0,
+      },
+    },
+    channelTitle: '',
+    tags: [''],
+    categoryId: '',
+    liveBroadcastContent: '',
+    localized: {
+      title: '',
+      description: '',
+    },
+    defaultAudioLanguage: '',
+  },
+  statistics: {
+    viewCount: '',
+    likeCount: '',
+    dislikeCount: '',
+    favoriteCount: '',
+    commentCount: '',
+  },
+};
+
 const mockSearchItems: Array<ISearchItem> = [
   {
     kind: 'youtube#searchResult',

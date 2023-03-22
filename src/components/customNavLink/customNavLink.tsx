@@ -2,17 +2,14 @@ import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 import { ReactNode } from 'react';
 import color from '@utils/styles/stylesUtils';
+import StyledButton from '@components/styledButton/styledButton';
 
-const StyledNavLink = styled.button`
-  max-height: 4rem;
-  border-radius: 1.5rem;
-  padding: 0.5rem 1rem;
-  background-color: ${color('neutral.button_background')};
-
+const StyledNavLink = styled(StyledButton)`
   .active {
     color: ${color('danger.text')};
     text-decoration: none;
     font-size: 1.5rem;
+    text-transform: capitalize;
 
     &::before {
       content: '• ';

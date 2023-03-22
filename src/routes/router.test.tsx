@@ -19,7 +19,7 @@ describe('<Router />', () => {
     expect(buttons.length).toBeGreaterThan(0);
 
     expect(buttons[0]).toHaveTextContent('Home');
-    expect(buttons[1]).toHaveTextContent('About');
+    expect(buttons[2]).toHaveTextContent('About');
 
     fireEvent(
       getByText(buttons[0], 'Home'),
@@ -34,7 +34,7 @@ describe('<Router />', () => {
     expect(buttons[0].childNodes[0]).not.toHaveClass('unselected');
 
     fireEvent(
-      getByText(buttons[1], 'About'),
+      getByText(buttons[2], 'About'),
       new MouseEvent('click', {
         bubbles: true,
       })

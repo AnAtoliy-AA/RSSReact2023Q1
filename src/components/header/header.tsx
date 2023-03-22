@@ -14,7 +14,7 @@ const HeaderStyles = styled.header`
 `;
 
 const NavContainer = styled.div`
-  width: 15rem;
+  width: 20rem;
   display: flex;
   justify-content: space-around;
 `;
@@ -25,6 +25,7 @@ function Header() {
       <ShowTheLocationWithRouter />
       <NavContainer>
         <CustomNavLink to={APP_PATHS.HOME}>Home</CustomNavLink>
+        <CustomNavLink to={APP_PATHS.CREATE_CARDS}>New card</CustomNavLink>
         <CustomNavLink to={APP_PATHS.ABOUT}>About</CustomNavLink>
       </NavContainer>
     </HeaderStyles>

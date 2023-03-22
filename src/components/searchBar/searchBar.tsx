@@ -4,6 +4,7 @@ import LocalStorageService, {
   DEFAULT_LOCAL_STORAGE_KEY,
 } from '@services/localStorage/localStorage.service';
 import color from '@utils/styles/stylesUtils';
+import StyledButton from '@components/styledButton/styledButton';
 
 type SearchBarProps = object;
 type SearchBarState = {
@@ -20,11 +21,7 @@ const SearchBarInput = styled.input`
   margin: 0.5rem;
 `;
 
-const SearchBarButton = styled.button`
-  max-height: 4rem;
-  border-radius: 1.5rem;
-  padding: 0.5rem 1rem;
-  background-color: ${color('neutral.button_background')};
+const SearchBarButton = styled(StyledButton)`
   color: ${color('neutral.button_text')};
 `;
 
