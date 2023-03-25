@@ -4,6 +4,16 @@ import { MemoryRouter } from 'react-router-dom';
 import APP_PATHS from '@constants/appPath/appPath';
 import Router from './router';
 
+enum Buttons {
+  HOME,
+  CREATE_CARD,
+  ABOUT,
+}
+
+enum ChildNodes {
+  FIRST,
+}
+
 describe('<Router />', () => {
   test('Router mounts properly', () => {
     const wrapper = render(
@@ -18,32 +28,35 @@ describe('<Router />', () => {
 
     expect(buttons.length).toBeGreaterThan(0);
 
-    expect(buttons[0]).toHaveTextContent('Home');
-    expect(buttons[2]).toHaveTextContent('About');
+    expect(buttons[Buttons.HOME]).toHaveTextContent('Home');
+    expect(buttons[Buttons.CREATE_CARD]).toHaveTextContent('New card');
+    expect(buttons[Buttons.ABOUT]).toHaveTextContent('About');
 
     fireEvent(
-      getByText(buttons[0], 'Home'),
+      getByText(buttons[Buttons.HOME], 'Home'),
       new MouseEvent('click', {
         bubbles: true,
       })
     );
 
-    expect(buttons[0].childNodes[0]).toHaveClass('active');
-    expect(buttons[1].childNodes[0]).not.toHaveClass('active');
-    expect(buttons[1].childNodes[0]).toHaveClass('unselected');
-    expect(buttons[0].childNodes[0]).not.toHaveClass('unselected');
+    expect(buttons[Buttons.HOME].childNodes[ChildNodes.FIRST]).toHaveClass('active');
+    expect(buttons[Buttons.HOME].childNodes[ChildNodes.FIRST]).not.toHaveClass('unselected');
+    expect(buttons[Buttons.CREATE_CARD].childNodes[ChildNodes.FIRST]).not.toHaveClass('active');
+    expect(buttons[Buttons.CREATE_CARD].childNodes[ChildNodes.FIRST]).toHaveClass('unselected');
 
     fireEvent(
-      getByText(buttons[2], 'About'),
+      getByText(buttons[Buttons.ABOUT], 'About'),
       new MouseEvent('click', {
         bubbles: true,
       })
     );
 
-    expect(buttons[0].childNodes[0]).not.toHaveClass('active');
-    expect(buttons[1].childNodes[0]).toHaveClass('active');
+    expect(buttons[Buttons.HOME].childNodes[ChildNodes.FIRST]).not.toHaveClass('active');
+    expect(buttons[Buttons.CREATE_CARD].childNodes[ChildNodes.FIRST]).not.toHaveClass('active');
+    expect(buttons[Buttons.ABOUT].childNodes[ChildNodes.FIRST]).toHaveClass('active');
 
-    expect(buttons[0].childNodes[0]).toHaveClass('unselected');
-    expect(buttons[1].childNodes[0]).not.toHaveClass('unselected');
+    expect(buttons[Buttons.HOME].childNodes[ChildNodes.FIRST]).toHaveClass('unselected');
+    expect(buttons[Buttons.CREATE_CARD].childNodes[ChildNodes.FIRST]).toHaveClass('unselected');
+    expect(buttons[Buttons.ABOUT].childNodes[ChildNodes.FIRST]).not.toHaveClass('unselected');
   });
 });

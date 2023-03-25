@@ -11,47 +11,23 @@ interface ICardDataOpts {
   isFavorites: string;
 }
 
-enum FormFields {
-  TITLE,
-  CHANNEL_TITLE,
-  IMAGE,
-  DESCRIPTION,
-  TO_DO_NAME,
-  CREATED_AT,
-  FAVORITES,
-}
-
-enum FormFileFields {
-  FIRST,
+export enum FormFields {
+  TITLE = 'title',
+  CHANNEL_TITLE = 'channelTitle',
+  IMAGE = 'image',
+  DESCRIPTION = 'description',
+  TO_DO_NAME = 'todoName',
+  CREATED_AT = 'createdAt',
+  FAVORITES = 'isFavorites',
 }
 
 class FormService {
   static createCardData(currentForm: HTMLFormElement): ICardValues {
-    const formValues = this.getCardFormData(currentForm);
+    const formValues = Object.fromEntries(
+      new FormData(currentForm).entries()
+    ) as unknown as ICardDataOpts;
 
     return this.createCardItemDto(formValues);
-  }
-
-  private static getCardFormData(currentForm: HTMLFormElement) {
-    const title = (currentForm?.[FormFields.TITLE] as HTMLInputElement)?.value;
-    const channelTitle = (currentForm?.[FormFields.CHANNEL_TITLE] as HTMLInputElement)?.value;
-    const image = (currentForm?.[FormFields.IMAGE] as HTMLInputElement)?.files?.[
-      FormFileFields.FIRST
-    ];
-    const description = (currentForm?.[FormFields.DESCRIPTION] as HTMLInputElement)?.value;
-    const todoName = (currentForm?.[FormFields.TO_DO_NAME] as HTMLSelectElement)?.value;
-    const createdAt = (currentForm?.[FormFields.CREATED_AT] as HTMLInputElement)?.value;
-    const isFavorites = (currentForm?.[FormFields.CREATED_AT] as HTMLInputElement)?.value;
-
-    return {
-      title,
-      channelTitle,
-      image,
-      description,
-      todoName,
-      createdAt,
-      isFavorites,
-    };
   }
 
   private static createCardItemDto(opts: ICardDataOpts): ICardValues {
