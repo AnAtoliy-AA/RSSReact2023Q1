@@ -1,4 +1,4 @@
-import { HTMLInputTypeAttribute } from 'react';
+import { Component, HTMLInputTypeAttribute } from 'react';
 import styled from 'styled-components';
 import FormService, { FormFields } from '@services/form/formService';
 import color from '@utils/styles/stylesUtils';
@@ -30,7 +30,8 @@ const StyledInput = styled.input`
 
 interface ISelectChild {
   id: number;
-  name: string | number;
+  name: string;
+  label?: string;
 }
 
 interface IInputValues {
@@ -98,23 +99,23 @@ export const inputsArray: Array<IInputValues> = [
     children: [
       {
         id: 1,
-        name: 1,
+        name: '1',
       },
       {
         id: 2,
-        name: 2,
+        name: '2',
       },
       {
         id: 3,
-        name: 3,
+        name: '3',
       },
       {
         id: 4,
-        name: 4,
+        name: '4',
       },
       {
         id: 5,
-        name: 5,
+        name: '5',
       },
     ],
   },
@@ -130,6 +131,38 @@ export const inputsArray: Array<IInputValues> = [
   },
   {
     id: 7,
+    label: FormService.convertNameToLabel(FormFields.NOTIFICATIONS),
+    name: FormFields.NOTIFICATIONS,
+    placeholder: FormFields.NOTIFICATIONS,
+    type: 'radio',
+    required: true,
+    pattern: '',
+    errorMessage: 'required',
+    children: [
+      {
+        id: 1,
+        name: FormFields.SEND,
+        label: FormService.convertNameToLabel(FormFields.SEND),
+      },
+      {
+        id: 2,
+        name: FormFields.DO_NOT_SEND,
+        label: FormService.convertNameToLabel(FormFields.DO_NOT_SEND),
+      },
+    ],
+  },
+  {
+    id: 8,
+    label: FormService.convertNameToLabel(FormFields.MARK_ME_AS_CREATOR),
+    name: FormFields.MARK_ME_AS_CREATOR,
+    placeholder: FormFields.MARK_ME_AS_CREATOR,
+    type: 'checkbox',
+    required: false,
+    pattern: '',
+    errorMessage: '',
+  },
+  {
+    id: 9,
     label: FormService.convertNameToLabel(FormFields.CONFIRM_DATA),
     name: FormFields.CONFIRM_DATA,
     placeholder: FormFields.CONFIRM_DATA,
@@ -144,6 +177,69 @@ interface IInputProps {
   inputProps: IInputValues;
 }
 
+type IFormControlWithChildrenProps = Partial<IInputValues>;
+
+interface IFormControlWithChildrenState {
+  selectedOption: number;
+}
+
+class FormControlWithChildren extends Component<
+  IFormControlWithChildrenProps,
+  IFormControlWithChildrenState
+> {
+  constructor(props: IFormControlWithChildrenProps | Readonly<IFormControlWithChildrenProps>) {
+    super(props);
+
+    this.state = { selectedOption: 0 };
+  }
+
+  render() {
+    const { type, children, name, errorMessage } = this.props;
+    return (
+      <>
+        {type === 'select' && (
+          <select name={name}>
+            {children?.map((child) => {
+              const { id: childId, name: childName } = child;
+
+              return (
+                <option key={childId} value={childName}>
+                  {childName}
+                </option>
+              );
+            })}
+          </select>
+        )}
+        {type === 'radio' && (
+          <fieldset name={name}>
+            {children?.map((child) => {
+              const { id: childId, name: childName, label: childLabel } = child;
+              const { selectedOption } = this.state;
+              const checked = childId === selectedOption;
+
+              return (
+                <div key={childId}>
+                  <label htmlFor={childName}>{childLabel}</label>
+                  <StyledInput
+                    checked={checked}
+                    key={childId}
+                    id={childName}
+                    type={type}
+                    name={childName}
+                    onChange={() => this.setState({ selectedOption: childId })}
+                  />
+                </div>
+              );
+            })}
+          </fieldset>
+        )}
+
+        <span>{errorMessage}</span>
+      </>
+    );
+  }
+}
+
 function CreateCardFormControl(props: IInputProps) {
   const { inputProps } = props;
   const { id, label, name, type, placeholder, children, required, errorMessage, pattern } =
@@ -153,17 +249,9 @@ function CreateCardFormControl(props: IInputProps) {
     <FormControl key={id}>
       <label htmlFor={name}>{label}</label>
       {children?.length ? (
-        <select name={name}>
-          {children?.map((child) => {
-            const { id: childId, name: childName } = child;
-
-            return (
-              <option key={childId} value={childName}>
-                {childName}
-              </option>
-            );
-          })}
-        </select>
+        <FormControlWithChildren name={name} type={type} errorMessage={errorMessage}>
+          {children}
+        </FormControlWithChildren>
       ) : (
         <>
           <StyledInput

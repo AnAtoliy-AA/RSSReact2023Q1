@@ -6,6 +6,10 @@ export interface CardProps {
   title?: string;
   description?: string;
   priority?: string;
+  markMeAsCreator?: string;
+  confirmData?: string;
+  send?: string;
+  doNotSend?: string;
 }
 
 const BackSideContainer = styled(SideCardContainer)`
@@ -17,13 +21,17 @@ const CardDescription = styled.p`
 `;
 
 function BackCardSide(props: CardProps) {
-  const { title, description, priority } = props;
+  const { title, description, priority, markMeAsCreator, send, doNotSend, confirmData } = props;
 
   return (
     <BackSideContainer>
       <CardTitle>{title}</CardTitle>
       <CardDescription>{description}</CardDescription>
       {priority && <p>Priority: {priority}</p>}
+      {send && <p>Send notifications to me</p>}
+      {doNotSend && <p>Don&#39;t send to me notifications</p>}
+      {markMeAsCreator && <p>I&#39;ve marked as creator</p>}
+      {confirmData && <p>Data confirmed by me</p>}
     </BackSideContainer>
   );
 }

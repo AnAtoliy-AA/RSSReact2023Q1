@@ -11,6 +11,10 @@ export interface CardProps {
   description?: string;
   priority?: string;
   publishedAt?: string;
+  markMeAsCreator?: string;
+  confirmData?: string;
+  send?: string;
+  doNotSend?: string;
 }
 
 interface ICardState {
@@ -55,7 +59,18 @@ class Card extends React.Component<CardProps, ICardState> {
 
   render() {
     const { isFrontShown } = this.state;
-    const { title, channelTitle, imageUrl, description, publishedAt, priority } = this.props;
+    const {
+      title,
+      channelTitle,
+      imageUrl,
+      description,
+      publishedAt,
+      priority,
+      markMeAsCreator,
+      confirmData,
+      send,
+      doNotSend,
+    } = this.props;
 
     return (
       <CardContainer isFrontShown={isFrontShown} onClick={this.handleRotate}>
@@ -66,7 +81,15 @@ class Card extends React.Component<CardProps, ICardState> {
           publishedAt={publishedAt}
           channelTitle={channelTitle}
         />
-        <BackCardSide title={title} description={description} priority={priority} />
+        <BackCardSide
+          title={title}
+          description={description}
+          priority={priority}
+          markMeAsCreator={markMeAsCreator}
+          confirmData={confirmData}
+          send={send}
+          doNotSend={doNotSend}
+        />
       </CardContainer>
     );
   }

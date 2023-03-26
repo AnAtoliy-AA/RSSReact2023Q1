@@ -19,7 +19,11 @@ export enum FormFields {
   PRIORITY = 'priority',
   PUBLISHED_AT = 'publishedAt',
   FAVORITES = 'isFavorites',
+  NOTIFICATIONS = 'notifications',
   CONFIRM_DATA = 'confirmData',
+  MARK_ME_AS_CREATOR = 'markMeAsCreator',
+  SEND = 'send',
+  DO_NOT_SEND = 'doNotSend',
 }
 
 class FormService {

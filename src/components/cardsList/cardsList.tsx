@@ -20,8 +20,19 @@ function CardsList(props: CardListProps) {
   return (
     <CardContainer>
       {formattedCards?.map((cardValues) => {
-        const { id, title, description, imageUrl, publishedAt, channelTitle, priority } =
-          cardValues;
+        const {
+          id,
+          title,
+          description,
+          imageUrl,
+          publishedAt,
+          channelTitle,
+          priority,
+          markMeAsCreator,
+          confirmData,
+          send,
+          doNotSend,
+        } = cardValues;
 
         return (
           <Card
@@ -32,6 +43,10 @@ function CardsList(props: CardListProps) {
             publishedAt={publishedAt}
             channelTitle={channelTitle}
             priority={priority}
+            markMeAsCreator={markMeAsCreator}
+            confirmData={confirmData}
+            send={send}
+            doNotSend={doNotSend}
           />
         );
       })}
