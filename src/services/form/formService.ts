@@ -17,7 +17,7 @@ export enum FormFields {
   IMAGE = 'image',
   DESCRIPTION = 'description',
   TO_DO_NAME = 'todoName',
-  CREATED_AT = 'createdAt',
+  PUBLISHED_AT = 'publishedAt',
   FAVORITES = 'isFavorites',
 }
 
@@ -28,6 +28,12 @@ class FormService {
     ) as unknown as ICardDataOpts;
 
     return this.createCardItemDto(formValues);
+  }
+
+  static convertNameToLabel(title: string): string {
+    const words = title.match(/[a-zA-Z][^A-Z]*/g) || [];
+
+    return words.join(' ');
   }
 
   private static createCardItemDto(opts: ICardDataOpts): ICardValues {

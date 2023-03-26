@@ -1,12 +1,17 @@
 import { HTMLInputTypeAttribute } from 'react';
 import styled from 'styled-components';
-import { FormFields } from '@services/form/formService';
+import FormService, { FormFields } from '@services/form/formService';
 import color from '@utils/styles/stylesUtils';
 
 const FormControl = styled.div`
   display: flex;
-  width: 120%;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+
+  label {
+    text-transform: capitalize;
+    font-size: 1.5rem;
+  }
 
   span {
     color: ${color('danger.text')};
@@ -18,7 +23,10 @@ const FormControl = styled.div`
   }
 `;
 
-const StyledInput = styled.input``;
+const StyledInput = styled.input`
+  font-size: 1.5rem;
+  margin: 0.5rem;
+`;
 
 interface ISelectChild {
   id: number;
@@ -27,6 +35,7 @@ interface ISelectChild {
 
 interface IInputValues {
   id: number;
+  label: string;
   name: FormFields;
   placeholder: FormFields;
   type: HTMLInputTypeAttribute;
@@ -39,24 +48,27 @@ interface IInputValues {
 export const inputsArray: Array<IInputValues> = [
   {
     id: 1,
+    label: FormService.convertNameToLabel(FormFields.TITLE),
     name: FormFields.TITLE,
     placeholder: FormFields.TITLE,
     type: 'text',
     required: true,
-    pattern: '^[a-zA-Z0-9 ]{3-16}$',
-    errorMessage: 'required field with letters and numbers. Should contain at lest 3 symbols.',
+    pattern: '[\\w\\W]{3,}',
+    errorMessage: 'required field with letters and numbers. Should contain at least 3 symbols.',
   },
   {
     id: 2,
+    label: FormService.convertNameToLabel(FormFields.CHANNEL_TITLE),
     name: FormFields.CHANNEL_TITLE,
     placeholder: FormFields.CHANNEL_TITLE,
     type: 'text',
     required: true,
-    pattern: '^[a-zA-Z0-9 ]{3-16}$',
-    errorMessage: 'required field with letters and numbers. Should contain at lest 3 symbols.',
+    pattern: '^[\\w\\W]{3,}',
+    errorMessage: 'required field with letters and numbers. Should contain at least 3 symbols.',
   },
   {
     id: 3,
+    label: FormService.convertNameToLabel(FormFields.IMAGE),
     name: FormFields.IMAGE,
     placeholder: FormFields.IMAGE,
     type: 'file',
@@ -66,17 +78,19 @@ export const inputsArray: Array<IInputValues> = [
   },
   {
     id: 4,
+    label: FormService.convertNameToLabel(FormFields.DESCRIPTION),
     name: FormFields.DESCRIPTION,
     placeholder: FormFields.DESCRIPTION,
     type: 'text',
     required: true,
-    pattern: '',
+    pattern: '^[\\w\\W]{1,}',
     errorMessage: 'required',
   },
   {
     id: 5,
-    name: FormFields.DESCRIPTION,
-    placeholder: FormFields.DESCRIPTION,
+    label: FormService.convertNameToLabel(FormFields.TO_DO_NAME),
+    name: FormFields.TO_DO_NAME,
+    placeholder: FormFields.TO_DO_NAME,
     type: '',
     required: true,
     pattern: '',
@@ -88,14 +102,15 @@ export const inputsArray: Array<IInputValues> = [
       },
       {
         id: 2,
-        name: 1,
+        name: 2,
       },
     ],
   },
   {
     id: 6,
-    name: FormFields.CREATED_AT,
-    placeholder: FormFields.CREATED_AT,
+    label: FormService.convertNameToLabel(FormFields.PUBLISHED_AT),
+    name: FormFields.PUBLISHED_AT,
+    placeholder: FormFields.PUBLISHED_AT,
     type: 'date',
     required: true,
     pattern: '',
@@ -103,12 +118,13 @@ export const inputsArray: Array<IInputValues> = [
   },
   {
     id: 7,
+    label: FormService.convertNameToLabel(FormFields.FAVORITES),
     name: FormFields.FAVORITES,
     placeholder: FormFields.FAVORITES,
     type: 'checkbox',
-    required: true,
+    required: false,
     pattern: '',
-    errorMessage: 'required',
+    errorMessage: '',
   },
 ];
 
@@ -118,11 +134,12 @@ interface IInputProps {
 
 function CreateCardFormControl(props: IInputProps) {
   const { inputProps } = props;
-  const { id, name, type, placeholder, children, required, errorMessage, pattern } = inputProps;
+  const { id, label, name, type, placeholder, children, required, errorMessage, pattern } =
+    inputProps;
 
   return (
     <FormControl key={id}>
-      <p>{name}</p>
+      <label htmlFor={name}>{label}</label>
       {children?.length ? (
         <select>
           {children?.map((child) => {

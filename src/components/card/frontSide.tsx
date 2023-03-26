@@ -45,6 +45,9 @@ const ImageWrapper = styled.div`
 
   img {
     width: 100%;
+    max-width: 320px;
+    max-height: 180px;
+
     filter: grayscale();
   }
 `;

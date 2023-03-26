@@ -101,6 +101,9 @@ const darkTheme = {
   info: {
     text: darkPalette.info[OpacityVars.MIN],
   },
+  success: {
+    text: darkPalette.success[OpacityVars.MEDIUM],
+  },
 };
 
 export default darkTheme;

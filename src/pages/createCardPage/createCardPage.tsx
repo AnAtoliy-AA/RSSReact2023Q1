@@ -13,7 +13,6 @@ const PageWrapper = styled.div`
 `;
 
 const PageTitle = styled.h2``;
-const PageSubTitle = styled.h3``;
 
 type CreateCardPageProps = object;
 type CreateCardPageState = {
@@ -41,7 +40,6 @@ class CreateCardPage extends Component<CreateCardPageProps, CreateCardPageState>
     return (
       <PageWrapper>
         <PageTitle>Create new card</PageTitle>
-        <PageSubTitle>Please, fill all required fields</PageSubTitle>
         <CreateCardForm addCard={this.addCard} />
         <CardsList formattedCards={formattedCards} />
       </PageWrapper>
