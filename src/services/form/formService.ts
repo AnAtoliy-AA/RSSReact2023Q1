@@ -8,7 +8,7 @@ interface ICardDataOpts {
   description: string;
   todoName: string;
   createdAt: string;
-  isFavorites: string;
+  isFavorites: boolean;
 }
 
 export enum FormFields {
@@ -36,7 +36,7 @@ class FormService {
     return words.join(' ');
   }
 
-  private static createCardItemDto(opts: ICardDataOpts): ICardValues {
+  static createCardItemDto(opts: ICardDataOpts): ICardValues {
     const { image } = opts;
     const id = uuidv4();
     const imageUrl = image ? URL.createObjectURL(image) : '';
