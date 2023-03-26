@@ -20,7 +20,8 @@ function CardsList(props: CardListProps) {
   return (
     <CardContainer>
       {formattedCards?.map((cardValues) => {
-        const { id, title, description, imageUrl, publishedAt, channelTitle } = cardValues;
+        const { id, title, description, imageUrl, publishedAt, channelTitle, priority } =
+          cardValues;
 
         return (
           <Card
@@ -30,6 +31,7 @@ function CardsList(props: CardListProps) {
             imageUrl={imageUrl}
             publishedAt={publishedAt}
             channelTitle={channelTitle}
+            priority={priority}
           />
         );
       })}

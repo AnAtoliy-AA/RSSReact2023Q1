@@ -9,6 +9,7 @@ export interface CardProps {
   channelTitle?: string;
   imageUrl?: string;
   description?: string;
+  priority?: string;
   publishedAt?: string;
 }
 
@@ -54,7 +55,7 @@ class Card extends React.Component<CardProps, ICardState> {
 
   render() {
     const { isFrontShown } = this.state;
-    const { title, channelTitle, imageUrl, description, publishedAt } = this.props;
+    const { title, channelTitle, imageUrl, description, publishedAt, priority } = this.props;
 
     return (
       <CardContainer isFrontShown={isFrontShown} onClick={this.handleRotate}>
@@ -65,7 +66,7 @@ class Card extends React.Component<CardProps, ICardState> {
           publishedAt={publishedAt}
           channelTitle={channelTitle}
         />
-        <BackCardSide title={title} description={description} />
+        <BackCardSide title={title} description={description} priority={priority} />
       </CardContainer>
     );
   }

@@ -33,7 +33,7 @@ describe('FormService', () => {
         title: 'Example Card',
         description: 'This is an example card.',
         channelTitle: 'channelTitle',
-        todoName: '2',
+        priority: '2',
         createdAt: '2023 - 03 - 25',
         isFavorites: false,
       };
@@ -51,7 +51,7 @@ describe('FormService', () => {
         title: 'Example Card',
         description: 'This is an example card.',
         channelTitle: 'channelTitle',
-        todoName: '2',
+        priority: '2',
         createdAt: '2023 - 03 - 25',
         isFavorites: false,
       };

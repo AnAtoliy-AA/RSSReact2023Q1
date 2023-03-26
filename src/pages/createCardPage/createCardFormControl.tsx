@@ -72,7 +72,7 @@ export const inputsArray: Array<IInputValues> = [
     name: FormFields.IMAGE,
     placeholder: FormFields.IMAGE,
     type: 'file',
-    required: false,
+    required: true,
     pattern: '',
     errorMessage: '',
   },
@@ -88,9 +88,9 @@ export const inputsArray: Array<IInputValues> = [
   },
   {
     id: 5,
-    label: FormService.convertNameToLabel(FormFields.TO_DO_NAME),
-    name: FormFields.TO_DO_NAME,
-    placeholder: FormFields.TO_DO_NAME,
+    label: FormService.convertNameToLabel(FormFields.PRIORITY),
+    name: FormFields.PRIORITY,
+    placeholder: FormFields.PRIORITY,
     type: '',
     required: true,
     pattern: '',
@@ -103,6 +103,18 @@ export const inputsArray: Array<IInputValues> = [
       {
         id: 2,
         name: 2,
+      },
+      {
+        id: 3,
+        name: 3,
+      },
+      {
+        id: 4,
+        name: 4,
+      },
+      {
+        id: 5,
+        name: 5,
       },
     ],
   },
@@ -118,13 +130,13 @@ export const inputsArray: Array<IInputValues> = [
   },
   {
     id: 7,
-    label: FormService.convertNameToLabel(FormFields.FAVORITES),
-    name: FormFields.FAVORITES,
-    placeholder: FormFields.FAVORITES,
+    label: FormService.convertNameToLabel(FormFields.CONFIRM_DATA),
+    name: FormFields.CONFIRM_DATA,
+    placeholder: FormFields.CONFIRM_DATA,
     type: 'checkbox',
-    required: false,
+    required: true,
     pattern: '',
-    errorMessage: '',
+    errorMessage: 'required',
   },
 ];
 
@@ -141,7 +153,7 @@ function CreateCardFormControl(props: IInputProps) {
     <FormControl key={id}>
       <label htmlFor={name}>{label}</label>
       {children?.length ? (
-        <select>
+        <select name={name}>
           {children?.map((child) => {
             const { id: childId, name: childName } = child;
 

@@ -5,6 +5,7 @@ import { CardTitle, SideCardContainer } from './frontSide';
 export interface CardProps {
   title?: string;
   description?: string;
+  priority?: string;
 }
 
 const BackSideContainer = styled(SideCardContainer)`
@@ -16,12 +17,13 @@ const CardDescription = styled.p`
 `;
 
 function BackCardSide(props: CardProps) {
-  const { title, description } = props;
+  const { title, description, priority } = props;
 
   return (
     <BackSideContainer>
       <CardTitle>{title}</CardTitle>
       <CardDescription>{description}</CardDescription>
+      {priority && <p>Priority: {priority}</p>}
     </BackSideContainer>
   );
 }

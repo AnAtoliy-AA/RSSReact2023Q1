@@ -6,7 +6,7 @@ interface ICardDataOpts {
   channelTitle: string;
   image?: File;
   description: string;
-  todoName: string;
+  priority: string;
   createdAt: string;
   isFavorites: boolean;
 }
@@ -16,9 +16,10 @@ export enum FormFields {
   CHANNEL_TITLE = 'channelTitle',
   IMAGE = 'image',
   DESCRIPTION = 'description',
-  TO_DO_NAME = 'todoName',
+  PRIORITY = 'priority',
   PUBLISHED_AT = 'publishedAt',
   FAVORITES = 'isFavorites',
+  CONFIRM_DATA = 'confirmData',
 }
 
 class FormService {
