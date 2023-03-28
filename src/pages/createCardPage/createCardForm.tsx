@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ICardValues } from '@services/card/card.service';
 import FormService from '@services/form/formService';
 import color from '@utils/styles/stylesUtils';
-import CreateCardFormControl, { inputsArray } from './createCardFormControl';
+import CreateCardFormControl from './createCardFormControl';
 
 const CreteForm = styled.form`
   display: flex;
@@ -26,6 +26,7 @@ interface CreateCardProps {
 
 type CreateCardState = {
   isCardCreated: boolean;
+  isFieldsInValid: Record<string, boolean>;
 };
 
 const DEFAULT_MESSAGE_TIME = 2 * 1000;
@@ -38,7 +39,10 @@ class CreateCardForm extends Component<CreateCardProps, CreateCardState> {
   constructor(props: CreateCardProps) {
     super(props);
     this.handleOnSubmit = this.handleOnSubmit.bind(this);
-    this.state = { isCardCreated: false };
+    this.state = {
+      isCardCreated: false,
+      isFieldsInValid: {},
+    };
     this.form = React.createRef();
   }
 
@@ -54,26 +58,42 @@ class CreateCardForm extends Component<CreateCardProps, CreateCardState> {
     if (currentForm) {
       const newCardData = FormService.createCardData(currentForm);
 
-      const { addCard } = this.props;
+      const isFieldsInValid = FormService.validateData(newCardData);
 
-      addCard(newCardData);
+      if (isFieldsInValid?.isDataInValid) {
+        this.setState((state: CreateCardState) => {
+          return { ...state, isFieldsInValid };
+        });
+      } else {
+        const { addCard } = this.props;
 
-      this.setState({ isCardCreated: true });
+        addCard(newCardData);
 
-      this.timer = setTimeout(() => {
-        this.setState({ isCardCreated: false });
-        currentForm.reset();
-      }, DEFAULT_MESSAGE_TIME);
+        this.setState({ isCardCreated: true, isFieldsInValid: {} });
+
+        this.timer = setTimeout(() => {
+          this.setState({ isCardCreated: false });
+          currentForm.reset();
+        }, DEFAULT_MESSAGE_TIME);
+      }
     }
   };
 
   render() {
-    const { isCardCreated } = this.state;
+    const { isCardCreated, isFieldsInValid } = this.state;
+
     return (
       <CreteForm onSubmit={this.handleOnSubmit} ref={this.form}>
-        {inputsArray.map((inputProps) => (
-          <CreateCardFormControl key={inputProps.id} inputProps={inputProps} />
-        ))}
+        {FormService.inputsArrayVocabulary.map((inputProps) => {
+          const { id, name } = inputProps;
+          return (
+            <CreateCardFormControl
+              key={id}
+              inputProps={inputProps}
+              isError={!!isFieldsInValid?.[name]}
+            />
+          );
+        })}
         {isCardCreated ? <CreateMessage>Created!</CreateMessage> : <SubmitForm>Submit</SubmitForm>}
       </CreteForm>
     );
