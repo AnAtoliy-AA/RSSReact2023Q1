@@ -1,10 +1,10 @@
 import color from '@utils/styles/stylesUtils';
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 import BackCardSide from './backSide';
 import FrontCardSide from './frontSide';
 
-export interface CardProps {
+export interface ICardProps {
   title?: string;
   channelTitle?: string;
   imageUrl?: string;
@@ -15,10 +15,6 @@ export interface CardProps {
   confirmData?: string;
   send?: string;
   doNotSend?: string;
-}
-
-interface ICardState {
-  isFrontShown: boolean;
 }
 
 interface IContainerProps {
@@ -45,54 +41,45 @@ const CardContainer = styled.div<IContainerProps>`
   cursor: pointer;
 `;
 
-class Card extends React.Component<CardProps, ICardState> {
-  constructor(props: CardProps | Readonly<CardProps>) {
-    super(props);
-    this.state = { isFrontShown: true };
-  }
+function Card(props: ICardProps): JSX.Element {
+  const {
+    title,
+    channelTitle,
+    imageUrl,
+    description,
+    publishedAt,
+    priority,
+    markMeAsCreator,
+    confirmData,
+    send,
+    doNotSend,
+  } = props;
+  const [isFrontShown, setIsFrontShown] = useState<boolean>(true);
 
-  handleRotate = () => {
-    const { isFrontShown } = this.state;
+  const handleRotate = useCallback(() => {
+    setIsFrontShown((prev) => !prev);
+  }, []);
 
-    this.setState({ isFrontShown: !isFrontShown });
-  };
-
-  render() {
-    const { isFrontShown } = this.state;
-    const {
-      title,
-      channelTitle,
-      imageUrl,
-      description,
-      publishedAt,
-      priority,
-      markMeAsCreator,
-      confirmData,
-      send,
-      doNotSend,
-    } = this.props;
-
-    return (
-      <CardContainer isFrontShown={isFrontShown} onClick={this.handleRotate}>
-        <FrontCardSide
-          title={title}
-          description={description}
-          imageUrl={imageUrl}
-          publishedAt={publishedAt}
-          channelTitle={channelTitle}
-        />
-        <BackCardSide
-          title={title}
-          description={description}
-          priority={priority}
-          markMeAsCreator={markMeAsCreator}
-          confirmData={confirmData}
-          send={send}
-          doNotSend={doNotSend}
-        />
-      </CardContainer>
-    );
-  }
+  return (
+    <CardContainer isFrontShown={isFrontShown} onClick={handleRotate}>
+      <FrontCardSide
+        title={title}
+        description={description}
+        imageUrl={imageUrl}
+        publishedAt={publishedAt}
+        channelTitle={channelTitle}
+      />
+      <BackCardSide
+        title={title}
+        description={description}
+        priority={priority}
+        markMeAsCreator={markMeAsCreator}
+        confirmData={confirmData}
+        send={send}
+        doNotSend={doNotSend}
+      />
+    </CardContainer>
+  );
 }
 
 export default Card;

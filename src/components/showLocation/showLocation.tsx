@@ -1,7 +1,6 @@
 import APP_PATHS from '@constants/appPath/appPath';
-import { withRouter, RouterProps } from '@hoc/withRouter';
 import color from '@utils/styles/stylesUtils';
-import React from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 
 const PageTitle = styled.h1`
@@ -14,25 +13,23 @@ const PageTitle = styled.h1`
   }
 `;
 
-class ShowLocation extends React.PureComponent<RouterProps> {
-  render() {
-    const { location } = this.props;
-    const { pathname } = location;
+function ShowLocation(): JSX.Element {
+  const location = useLocation();
+  const { pathname } = location;
 
-    switch (pathname) {
-      case APP_PATHS.HOME:
-        return <PageTitle>MAIN PAGE</PageTitle>;
+  switch (pathname) {
+    case APP_PATHS.HOME:
+      return <PageTitle>MAIN PAGE</PageTitle>;
 
-      case APP_PATHS.ABOUT:
-        return <PageTitle>ABOUT PAGE</PageTitle>;
+    case APP_PATHS.ABOUT:
+      return <PageTitle>ABOUT PAGE</PageTitle>;
 
-      case APP_PATHS.CREATE_CARDS:
-        return <PageTitle>NEW CARD PAGE</PageTitle>;
+    case APP_PATHS.CREATE_CARDS:
+      return <PageTitle>NEW CARD PAGE</PageTitle>;
 
-      default:
-        return <PageTitle>NOT FOUND PAGE</PageTitle>;
-    }
+    default:
+      return <PageTitle>NOT FOUND PAGE</PageTitle>;
   }
 }
 
-export default withRouter(ShowLocation);
+export default ShowLocation;

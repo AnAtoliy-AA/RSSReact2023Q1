@@ -1,7 +1,7 @@
-import { CardProps } from '@components/card/card';
+import { ICardProps } from '@components/card/card';
 import { ISearchItem } from '@api/types/searchResults';
 
-export interface ICardValues extends CardProps {
+export interface ICardValues extends ICardProps {
   id: string;
 }
 

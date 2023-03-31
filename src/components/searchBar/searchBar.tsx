@@ -1,15 +1,11 @@
-import { ChangeEvent, Component, FormEvent } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LocalStorageService, {
   DEFAULT_LOCAL_STORAGE_KEY,
 } from '@services/localStorage/localStorage.service';
 import color from '@utils/styles/stylesUtils';
 import StyledButton from '@components/styledButton/styledButton';
-
-type SearchBarProps = object;
-type SearchBarState = {
-  searchValue: string;
-};
+import { useBeforeUnload } from 'react-router-dom';
 
 const SearchContainer = styled.form`
   flex-grow: 3;
@@ -25,49 +21,38 @@ const SearchBarButton = styled(StyledButton)`
   color: ${color('neutral.button_text')};
 `;
 
-// TODO move this method into class when it'll do something
-const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
-  event.preventDefault();
-};
+function SearchBar(): JSX.Element {
+  const [searchValue, setSearchValue] = useState<string>('');
 
-class SearchBar extends Component<SearchBarProps, SearchBarState> {
-  constructor(props: SearchBarProps | Readonly<SearchBarProps>) {
-    super(props);
-    this.state = { searchValue: LocalStorageService.getItem(DEFAULT_LOCAL_STORAGE_KEY) || '' };
-    this.componentCleanup = this.componentCleanup.bind(this);
-  }
-
-  componentDidMount() {
-    window.addEventListener('beforeunload', this.componentCleanup);
-  }
-
-  componentWillUnmount() {
-    this.componentCleanup();
-    window.removeEventListener('beforeunload', this.componentCleanup);
-  }
-
-  handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
-    this.setState({ searchValue: value });
+    setSearchValue(value);
   };
 
-  componentCleanup(): void {
-    const { searchValue } = this.state;
+  const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+  };
 
-    LocalStorageService.setItem<string>(DEFAULT_LOCAL_STORAGE_KEY, searchValue);
-  }
+  useEffect(() => {
+    const localStorageSearchValue = LocalStorageService.getItem<string>(DEFAULT_LOCAL_STORAGE_KEY);
+    if (typeof localStorageSearchValue === 'string') {
+      setSearchValue(localStorageSearchValue);
+    }
+  }, []);
 
-  render() {
-    const { searchValue } = this.state;
+  useBeforeUnload(
+    useCallback(() => {
+      LocalStorageService.setItem<string>(DEFAULT_LOCAL_STORAGE_KEY, searchValue);
+    }, [searchValue])
+  );
 
-    return (
-      <SearchContainer onSubmit={handleOnSubmit}>
-        <SearchBarInput value={searchValue} onChange={this.handleInputChange} />
-        <SearchBarButton type="submit">Search</SearchBarButton>
-      </SearchContainer>
-    );
-  }
+  return (
+    <SearchContainer onSubmit={handleOnSubmit}>
+      <SearchBarInput value={searchValue} onChange={handleInputChange} />
+      <SearchBarButton type="submit">Search</SearchBarButton>
+    </SearchContainer>
+  );
 }
 
 export default SearchBar;
