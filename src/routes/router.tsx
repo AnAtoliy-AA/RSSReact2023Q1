@@ -4,7 +4,7 @@ import MainPage from '@pages/mainPage/mainPage';
 import AboutUsPage from '@pages/aboutUsPage/aboutUsPage';
 import APP_PATHS from '@constants/appPath/appPath';
 import Layout from '@components/layout/layout';
-import CreateCardPage from '@pages/createCardPage/createCardPage';
+import CreateCardPage from '@pages/createCardPage/newCardPage';
 
 function Router(): JSX.Element {
   return (

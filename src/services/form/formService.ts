@@ -62,7 +62,7 @@ class FormService {
 
         const fieldValue = formValue?.[fieldName as keyof ICardValues];
 
-        const isRequiredFieldValid = !!(required && fieldValue);
+        const isRequiredFieldValid = !!(required && fieldValue) || !required;
         const isPatternMatch = !!(
           !pattern ||
           (pattern && fieldValue && new RegExp(pattern).test(fieldValue))
@@ -92,7 +92,7 @@ class FormService {
     return { id, imageUrl, ...opts };
   }
 
-  static inputsArrayVocabulary: Array<IInputValues> = [
+  static inputsArrayVocabulary: Readonly<Array<IInputValues>> = [
     {
       id: 1,
       label: FormService.convertNameToLabel(FormFields.TITLE),
