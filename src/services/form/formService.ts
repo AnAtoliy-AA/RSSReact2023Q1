@@ -200,7 +200,7 @@ class FormService {
       registerOptions: {
         required: true,
       },
-      errorMessage: '',
+      errorMessage: 'required',
     },
     {
       id: 9,
