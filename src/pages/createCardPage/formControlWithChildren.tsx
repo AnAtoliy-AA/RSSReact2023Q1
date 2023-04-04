@@ -8,7 +8,9 @@ export const StyledInput = styled.input`
   margin: 0.5rem;
 `;
 
-type IFormControlWithChildrenProps = Partial<IInputValues> & { isError?: Partial<FieldError> };
+type IFormControlWithChildrenProps = Partial<IInputValues> & {
+  isError?: Partial<FieldError> | null;
+};
 
 const FormControlWithChildren = forwardRef(
   (props: IFormControlWithChildrenProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element => {

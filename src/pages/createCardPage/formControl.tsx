@@ -22,7 +22,7 @@ const FormControl = styled.div`
 
 interface IInputProps {
   inputProps: IInputValues;
-  isError?: Partial<FieldError>;
+  isError?: Partial<FieldError> | null;
   register: UseFormRegister<FieldValues>;
 }
 
@@ -39,8 +39,7 @@ function CustomFormControl(props: IInputProps) {
           type={type}
           errorMessage={errorMessage}
           isError={isError}
-          {...register(name)}
-          {...registerOptions}
+          {...(register(name), { ...registerOptions })}
         >
           {children}
         </FormControlWithChildren>
@@ -49,8 +48,7 @@ function CustomFormControl(props: IInputProps) {
           <StyledInput
             placeholder={placeholder}
             type={type}
-            {...register(name)}
-            {...registerOptions}
+            {...(register(name), { ...registerOptions })}
           />
           {isError && <span>{errorMessage}</span>}
         </>
@@ -59,6 +57,6 @@ function CustomFormControl(props: IInputProps) {
   );
 }
 
-CustomFormControl.defaultProps = { isError: {} };
+CustomFormControl.defaultProps = { isError: null };
 
 export default CustomFormControl;
