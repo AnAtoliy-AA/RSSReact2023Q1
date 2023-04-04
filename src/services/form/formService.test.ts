@@ -1,4 +1,3 @@
-import { ICardValues } from '@services/card/card.service';
 import FormService from './formService';
 
 describe('FormService', () => {
@@ -64,36 +63,6 @@ describe('FormService', () => {
       expect(result.title).toEqual(mockOpts.title);
       expect(result.description).toEqual(mockOpts.description);
       expect(result).not.toHaveProperty('image');
-    });
-  });
-
-  describe('validateData', () => {
-    const validFormValue: ICardValues = {
-      id: '1',
-      title: 'Example Title',
-      channelTitle: 'Example Channel Title',
-      imageUrl: 'https://example.com/image.jpg',
-      description: 'Example Description',
-      priority: 'high',
-      publishedAt: '2022-01-01T00:00:00.000Z',
-      markMeAsCreator: 'yes',
-      confirmData: 'yes',
-      send: 'yes',
-      doNotSend: 'no',
-    };
-
-    it('returns empty object for valid form values', () => {
-      const validationResult = FormService.validateData(validFormValue);
-      expect(validationResult).toEqual({});
-    });
-
-    it('returns object with invalid field names as keys for invalid form values', () => {
-      const invalidFormValue: ICardValues = {
-        ...validFormValue,
-        title: '', // title is a required field, but this value is empty
-      };
-      const validationResult = FormService.validateData(invalidFormValue);
-      expect(validationResult).toEqual({ title: true, isDataInValid: true });
     });
   });
 });

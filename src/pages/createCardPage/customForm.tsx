@@ -1,10 +1,11 @@
-import React, { FormEvent, useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import StyledButton from '@components/styledButton/styledButton';
 import styled from 'styled-components';
 import { ICardValues } from '@services/card/card.service';
-import FormService from '@services/form/formService';
+import FormService, { ICardDataOpts } from '@services/form/formService';
 import color from '@utils/styles/stylesUtils';
-import CreateCardFormControl from './formControl';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import CustomFormControl from './formControl';
 
 const CreteForm = styled.form`
   display: flex;
@@ -30,9 +31,17 @@ function CustomForm(props: CreateCardProps): JSX.Element {
   const { addCard } = props;
 
   const [isCardCreated, setIsCardCreated] = useState<boolean>(false);
-  const [isFieldsInValid, setIsFieldsInValid] = useState<Record<string, boolean>>({});
 
-  const form = useRef<HTMLFormElement | null>(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+  });
+
   const timerRef = useRef<NodeJS.Timer>();
 
   useEffect(() => {
@@ -43,41 +52,27 @@ function CustomForm(props: CreateCardProps): JSX.Element {
     };
   }, []);
 
-  const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const onSubmit: SubmitHandler<FieldValues> = (formData) => {
+    const newCardData = FormService.createCardItemDto(formData as ICardDataOpts);
+    addCard(newCardData as ICardValues);
+    setIsCardCreated(true);
 
-    const { current: currentForm } = form;
-
-    if (currentForm) {
-      const newCardData = FormService.createCardData(currentForm);
-
-      const fieldsValidation = FormService.validateData(newCardData);
-
-      if (fieldsValidation?.isDataInValid) {
-        setIsFieldsInValid(fieldsValidation);
-      } else {
-        addCard(newCardData);
-
-        setIsCardCreated(true);
-        setIsFieldsInValid({});
-
-        timerRef.current = setTimeout(() => {
-          setIsCardCreated(false);
-          currentForm.reset();
-        }, DEFAULT_MESSAGE_TIME);
-      }
-    }
+    timerRef.current = setTimeout(() => {
+      setIsCardCreated(false);
+      reset();
+    }, DEFAULT_MESSAGE_TIME);
   };
 
   return (
-    <CreteForm onSubmit={handleOnSubmit} ref={form}>
+    <CreteForm onSubmit={handleSubmit(onSubmit)} role="form">
       {FormService.inputsArrayVocabulary.map((inputProps) => {
-        const { id, name } = inputProps;
+        const { id } = inputProps;
         return (
-          <CreateCardFormControl
+          <CustomFormControl
             key={id}
             inputProps={inputProps}
-            isError={!!isFieldsInValid?.[name]}
+            register={register}
+            isError={errors[id]}
           />
         );
       })}

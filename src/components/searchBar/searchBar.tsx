@@ -1,11 +1,10 @@
-import { ChangeEvent, FormEvent, useCallback, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import LocalStorageService, {
   DEFAULT_LOCAL_STORAGE_KEY,
 } from '@services/localStorage/localStorage.service';
 import color from '@utils/styles/stylesUtils';
 import StyledButton from '@components/styledButton/styledButton';
-import { useBeforeUnload } from 'react-router-dom';
 
 const SearchContainer = styled.form`
   flex-grow: 3;
@@ -22,7 +21,9 @@ const SearchBarButton = styled(StyledButton)`
 `;
 
 function SearchBar(): JSX.Element {
-  const [searchValue, setSearchValue] = useState<string>('');
+  const [searchValue, setSearchValue] = useState<string>(
+    LocalStorageService.getItem<string>(DEFAULT_LOCAL_STORAGE_KEY) || ''
+  );
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -35,17 +36,10 @@ function SearchBar(): JSX.Element {
   };
 
   useEffect(() => {
-    const localStorageSearchValue = LocalStorageService.getItem<string>(DEFAULT_LOCAL_STORAGE_KEY);
-    if (typeof localStorageSearchValue === 'string') {
-      setSearchValue(localStorageSearchValue);
-    }
-  }, []);
-
-  useBeforeUnload(
-    useCallback(() => {
+    return () => {
       LocalStorageService.setItem<string>(DEFAULT_LOCAL_STORAGE_KEY, searchValue);
-    }, [searchValue])
-  );
+    };
+  }, [searchValue]);
 
   return (
     <SearchContainer onSubmit={handleOnSubmit}>

@@ -2,10 +2,10 @@ import { ICardValues } from '@services/card/card.service';
 import { HTMLInputTypeAttribute } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-interface ICardDataOpts {
+export interface ICardDataOpts {
   title: string;
   channelTitle: string;
-  image?: File;
+  image?: FileList;
   description: string;
   priority: string;
   createdAt: string;
@@ -32,17 +32,26 @@ interface ISelectChild {
   name: string;
   label?: string;
 }
+
+export interface IRegisterOptions {
+  pattern?: string;
+  required: boolean;
+}
 export interface IInputValues {
   id: number;
   label: string;
   name: FormFields;
   placeholder: FormFields;
   type: HTMLInputTypeAttribute;
-  required: boolean;
   errorMessage: string;
-  pattern: string;
   children?: Array<ISelectChild>;
+  registerOptions?: IRegisterOptions;
 }
+
+export const RegExpPattern = {
+  title: '[\\w\\W]{3,}',
+  description: '[\\w\\W]{1,}',
+};
 
 class FormService {
   static createCardData(currentForm: HTMLFormElement): ICardValues {
@@ -51,31 +60,6 @@ class FormService {
     ) as unknown as ICardDataOpts;
 
     return this.createCardItemDto(formValues);
-  }
-
-  static validateData(formValue: ICardValues): Record<string, boolean> {
-    return Object.keys(formValue).reduce((acc: Record<string, boolean>, fieldName) => {
-      const inputParams = this.inputsArrayVocabulary.find((input) => input.name === fieldName);
-
-      if (inputParams) {
-        const { required, pattern } = inputParams;
-
-        const fieldValue = formValue?.[fieldName as keyof ICardValues];
-
-        const isRequiredFieldValid = !!(required && fieldValue) || !required;
-        const isPatternMatch = !!(
-          !pattern ||
-          (pattern && fieldValue && new RegExp(pattern).test(fieldValue))
-        );
-
-        if (!(isRequiredFieldValid && isPatternMatch)) {
-          acc.isDataInValid = true;
-          acc[fieldName] = true;
-        }
-      }
-
-      return acc;
-    }, {});
   }
 
   static convertNameToLabel(title: string): string {
@@ -87,7 +71,7 @@ class FormService {
   static createCardItemDto(opts: ICardDataOpts): ICardValues {
     const { image } = opts;
     const id = uuidv4();
-    const imageUrl = image ? URL.createObjectURL(image) : '';
+    const imageUrl = image?.length ? URL.createObjectURL(image?.[0]) : '';
 
     return { id, imageUrl, ...opts };
   }
@@ -99,9 +83,11 @@ class FormService {
       name: FormFields.TITLE,
       placeholder: FormFields.TITLE,
       type: 'text',
-      required: true,
-      pattern: '[\\w\\W]{3,}',
       errorMessage: 'required field with letters and numbers. Should contain at least 3 symbols.',
+      registerOptions: {
+        required: true,
+        pattern: RegExpPattern.title,
+      },
     },
     {
       id: 2,
@@ -109,8 +95,10 @@ class FormService {
       name: FormFields.CHANNEL_TITLE,
       placeholder: FormFields.CHANNEL_TITLE,
       type: 'text',
-      required: true,
-      pattern: '^[\\w\\W]{3,}',
+      registerOptions: {
+        required: true,
+        pattern: RegExpPattern.title,
+      },
       errorMessage: 'required field with letters and numbers. Should contain at least 3 symbols.',
     },
     {
@@ -119,8 +107,9 @@ class FormService {
       name: FormFields.IMAGE,
       placeholder: FormFields.IMAGE,
       type: 'file',
-      required: true,
-      pattern: '',
+      registerOptions: {
+        required: true,
+      },
       errorMessage: '',
     },
     {
@@ -129,8 +118,10 @@ class FormService {
       name: FormFields.DESCRIPTION,
       placeholder: FormFields.DESCRIPTION,
       type: 'text',
-      required: true,
-      pattern: '^[\\w\\W]{1,}',
+      registerOptions: {
+        required: true,
+        pattern: RegExpPattern.description,
+      },
       errorMessage: 'required',
     },
     {
@@ -139,8 +130,9 @@ class FormService {
       name: FormFields.PRIORITY,
       placeholder: FormFields.PRIORITY,
       type: 'select',
-      required: true,
-      pattern: '',
+      registerOptions: {
+        required: true,
+      },
       errorMessage: 'required',
       children: [
         {
@@ -171,8 +163,9 @@ class FormService {
       name: FormFields.PUBLISHED_AT,
       placeholder: FormFields.PUBLISHED_AT,
       type: 'date',
-      required: true,
-      pattern: '',
+      registerOptions: {
+        required: true,
+      },
       errorMessage: 'required',
     },
     {
@@ -181,8 +174,9 @@ class FormService {
       name: FormFields.NOTIFICATIONS,
       placeholder: FormFields.NOTIFICATIONS,
       type: 'radio',
-      required: false,
-      pattern: '',
+      registerOptions: {
+        required: false,
+      },
       errorMessage: '',
       children: [
         {
@@ -203,8 +197,9 @@ class FormService {
       name: FormFields.MARK_ME_AS_CREATOR,
       placeholder: FormFields.MARK_ME_AS_CREATOR,
       type: 'checkbox',
-      required: false,
-      pattern: '',
+      registerOptions: {
+        required: true,
+      },
       errorMessage: '',
     },
     {
@@ -213,8 +208,9 @@ class FormService {
       name: FormFields.CONFIRM_DATA,
       placeholder: FormFields.CONFIRM_DATA,
       type: 'checkbox',
-      required: true,
-      pattern: '',
+      registerOptions: {
+        required: true,
+      },
       errorMessage: 'required',
     },
   ];
