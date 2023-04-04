@@ -37,10 +37,7 @@ function CustomForm(props: CreateCardProps): JSX.Element {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm({
-    mode: 'onSubmit',
-    reValidateMode: 'onSubmit',
-  });
+  } = useForm();
 
   const timerRef = useRef<NodeJS.Timer>();
 
@@ -64,15 +61,15 @@ function CustomForm(props: CreateCardProps): JSX.Element {
   };
 
   return (
-    <CreteForm onSubmit={handleSubmit(onSubmit)} role="form">
+    <CreteForm onSubmit={handleSubmit(onSubmit)}>
       {FormService.inputsArrayVocabulary.map((inputProps) => {
-        const { id } = inputProps;
+        const { id, name } = inputProps;
         return (
           <CustomFormControl
             key={id}
             inputProps={inputProps}
             register={register}
-            isError={errors[id]}
+            isError={errors[name]}
           />
         );
       })}

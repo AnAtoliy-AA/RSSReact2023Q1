@@ -28,8 +28,7 @@ interface IInputProps {
 
 function CustomFormControl(props: IInputProps) {
   const { inputProps, isError, register } = props;
-  const { id, label, name, type, placeholder, children, errorMessage, registerOptions } =
-    inputProps;
+  const { id, label, name, type, placeholder, children, errorMessage } = inputProps;
 
   return (
     <FormControl key={id}>
@@ -39,7 +38,7 @@ function CustomFormControl(props: IInputProps) {
           type={type}
           errorMessage={errorMessage}
           isError={isError}
-          {...(register(name), { ...registerOptions })}
+          {...register(name)}
         >
           {children}
         </FormControlWithChildren>
@@ -48,7 +47,7 @@ function CustomFormControl(props: IInputProps) {
           <StyledInput
             placeholder={placeholder}
             type={type}
-            {...(register(name), { ...registerOptions })}
+            {...register(name, { required: true })}
           />
           {isError && <span>{errorMessage}</span>}
         </>

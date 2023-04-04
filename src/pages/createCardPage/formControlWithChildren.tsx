@@ -70,6 +70,6 @@ const FormControlWithChildren = forwardRef(
   }
 );
 
-FormControlWithChildren.defaultProps = { isError: {} };
+FormControlWithChildren.defaultProps = { isError: null };
 
 export default FormControlWithChildren;
