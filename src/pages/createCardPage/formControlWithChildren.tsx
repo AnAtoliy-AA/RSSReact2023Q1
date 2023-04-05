@@ -13,7 +13,10 @@ type IFormControlWithChildrenProps = Partial<IInputValues> & {
 };
 
 const FormControlWithChildren = forwardRef(
-  (props: IFormControlWithChildrenProps, ref: ForwardedRef<HTMLInputElement>): JSX.Element => {
+  (
+    props: IFormControlWithChildrenProps,
+    ref: ForwardedRef<HTMLSelectElement & HTMLInputElement>
+  ): JSX.Element => {
     const { type, children, name, errorMessage, isError } = props;
 
     const [selectedOption, setSelectedOption] = useState<number | null>(null);
@@ -28,7 +31,7 @@ const FormControlWithChildren = forwardRef(
     return (
       <>
         {type === 'select' && (
-          <select name={name}>
+          <select name={name} ref={ref}>
             {children?.map((child) => {
               const { id: childId, name: childName } = child;
 
