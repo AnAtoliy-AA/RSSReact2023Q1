@@ -13,8 +13,7 @@ export interface ICardProps {
   publishedAt?: string;
   markMeAsCreator?: string;
   confirmData?: string;
-  send?: string;
-  doNotSend?: string;
+  notifications?: string;
 }
 
 interface IContainerProps {
@@ -51,8 +50,7 @@ function Card(props: ICardProps): JSX.Element {
     priority,
     markMeAsCreator,
     confirmData,
-    send,
-    doNotSend,
+    notifications,
   } = props;
   const [isFrontShown, setIsFrontShown] = useState<boolean>(true);
 
@@ -75,8 +73,7 @@ function Card(props: ICardProps): JSX.Element {
         priority={priority}
         markMeAsCreator={markMeAsCreator}
         confirmData={confirmData}
-        send={send}
-        doNotSend={doNotSend}
+        notifications={notifications}
       />
     </CardContainer>
   );

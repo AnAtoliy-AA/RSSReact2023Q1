@@ -38,7 +38,8 @@ function CustomFormControl(props: IInputProps) {
           type={type}
           errorMessage={errorMessage}
           isError={isError}
-          {...register(name)}
+          name={name}
+          register={register}
         >
           {children}
         </FormControlWithChildren>

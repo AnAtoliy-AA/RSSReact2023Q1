@@ -30,8 +30,7 @@ function CardsList(props: CardListProps) {
           priority,
           markMeAsCreator,
           confirmData,
-          send,
-          doNotSend,
+          notifications,
         } = cardValues;
 
         return (
@@ -45,8 +44,7 @@ function CardsList(props: CardListProps) {
             priority={priority}
             markMeAsCreator={markMeAsCreator}
             confirmData={confirmData}
-            send={send}
-            doNotSend={doNotSend}
+            notifications={notifications}
           />
         );
       })}

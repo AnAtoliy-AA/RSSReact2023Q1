@@ -37,7 +37,10 @@ function CustomForm(props: CreateCardProps): JSX.Element {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    mode: 'onSubmit',
+    reValidateMode: 'onSubmit',
+  });
 
   const timerRef = useRef<NodeJS.Timer>();
 

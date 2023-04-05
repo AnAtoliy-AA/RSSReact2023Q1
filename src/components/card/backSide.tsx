@@ -1,5 +1,6 @@
 import { NOT_AVAILABLE_TEXT } from '@constants/common/common';
 import styled from 'styled-components';
+import { FormFields } from '@services/form/formService';
 import { CardTitle, SideCardContainer } from './frontSide';
 
 export interface CardProps {
@@ -8,8 +9,7 @@ export interface CardProps {
   priority?: string;
   markMeAsCreator?: string;
   confirmData?: string;
-  send?: string;
-  doNotSend?: string;
+  notifications?: string;
 }
 
 const BackSideContainer = styled(SideCardContainer)`
@@ -21,15 +21,15 @@ const CardDescription = styled.p`
 `;
 
 function BackCardSide(props: CardProps) {
-  const { title, description, priority, markMeAsCreator, send, doNotSend, confirmData } = props;
+  const { title, description, priority, markMeAsCreator, notifications, confirmData } = props;
 
   return (
     <BackSideContainer>
       <CardTitle>{title}</CardTitle>
       <CardDescription>{description}</CardDescription>
       {priority && <p>Priority: {priority}</p>}
-      {send && <p>Send notifications to me</p>}
-      {doNotSend && <p>Don&#39;t send to me notifications</p>}
+      {notifications === FormFields.SEND && <p>Send notifications to me</p>}
+      {notifications === FormFields.DO_NOT_SEND && <p>Don&#39;t send to me notifications</p>}
       {markMeAsCreator && <p>I&#39;ve marked as creator</p>}
       {confirmData && <p>Data confirmed by me</p>}
     </BackSideContainer>

@@ -1,7 +1,7 @@
-import { ForwardedRef, forwardRef, useCallback, useState } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
 import styled from 'styled-components';
 import { IInputValues } from '@services/form/formService';
-import { FieldError } from 'react-hook-form';
+import { FieldError, FieldValues, UseFormRegister } from 'react-hook-form';
 
 export const StyledInput = styled.input`
   font-size: 1.5rem;
@@ -10,68 +10,52 @@ export const StyledInput = styled.input`
 
 type IFormControlWithChildrenProps = Partial<IInputValues> & {
   isError?: Partial<FieldError> | null;
+  register: UseFormRegister<FieldValues>;
 };
 
-const FormControlWithChildren = forwardRef(
-  (
-    props: IFormControlWithChildrenProps,
-    ref: ForwardedRef<HTMLSelectElement & HTMLInputElement>
-  ): JSX.Element => {
-    const { type, children, name, errorMessage, isError } = props;
+function FormControlWithChildren(props: IFormControlWithChildrenProps): JSX.Element {
+  const { type, children, name, errorMessage, isError, register } = props;
 
-    const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  return (
+    <>
+      {type === 'select' && (
+        <select {...register(name || type)}>
+          {children?.map((child) => {
+            const { id: childId, name: childName } = child;
 
-    const handleInputChange = useCallback(
-      (childId: number) => () => {
-        setSelectedOption(childId);
-      },
-      []
-    );
+            return (
+              <option key={childId} value={childName}>
+                {childName}
+              </option>
+            );
+          })}
+        </select>
+      )}
+      {type === 'radio' && (
+        <fieldset>
+          {children?.map((child) => {
+            const { id: childId, name: childName, label: childLabel } = child;
 
-    return (
-      <>
-        {type === 'select' && (
-          <select name={name} ref={ref}>
-            {children?.map((child) => {
-              const { id: childId, name: childName } = child;
+            return (
+              <div key={`${childId}-${type}`}>
+                <label htmlFor={childName}>{childLabel}</label>
+                <StyledInput
+                  {...register(String(name))}
+                  key={`${childId}-${type}`}
+                  id={childName}
+                  type={type}
+                  value={childName}
+                />
+              </div>
+            );
+          })}
+        </fieldset>
+      )}
 
-              return (
-                <option key={childId} value={childName}>
-                  {childName}
-                </option>
-              );
-            })}
-          </select>
-        )}
-        {type === 'radio' && (
-          <fieldset name={name}>
-            {children?.map((child) => {
-              const { id: childId, name: childName, label: childLabel } = child;
-              const checked = childId === selectedOption;
-
-              return (
-                <div key={childId}>
-                  <label htmlFor={childName}>{childLabel}</label>
-                  <StyledInput
-                    checked={checked}
-                    key={childId}
-                    id={childName}
-                    type={type}
-                    name={childName}
-                    ref={ref}
-                    onChange={handleInputChange(childId)}
-                  />
-                </div>
-              );
-            })}
-          </fieldset>
-        )}
-
-        {isError && <span>{errorMessage}</span>}
-      </>
-    );
-  }
-);
+      {isError && <span>{errorMessage}</span>}
+    </>
+  );
+}
 
 FormControlWithChildren.defaultProps = { isError: null };
 
