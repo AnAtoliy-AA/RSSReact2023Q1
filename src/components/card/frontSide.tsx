@@ -1,4 +1,6 @@
+import StyledButton from '@components/styledButton/styledButton';
 import { NOT_AVAILABLE_TEXT } from '@constants/common/common';
+import rotateIcon from '@assets/icons/rotate.svg';
 import color from '@utils/styles/stylesUtils';
 import styled from 'styled-components';
 
@@ -8,6 +10,7 @@ export interface CardProps {
   imageUrl?: string;
   description?: string;
   publishedAt?: string;
+  onRotate?: VoidFunction;
 }
 
 export const SideCardContainer = styled.div`
@@ -70,10 +73,13 @@ const CardDescription = styled.p`
 const CardDate = styled.div``;
 
 function FrontCardSide(props: CardProps) {
-  const { title, channelTitle, imageUrl, description, publishedAt } = props;
+  const { title, channelTitle, imageUrl, description, publishedAt, onRotate } = props;
 
   return (
     <FrontSideContainer>
+      <StyledButton onClick={onRotate}>
+        <img src={rotateIcon} alt="rotate" />
+      </StyledButton>
       <FrontCardTitle title={title}>{title}</FrontCardTitle>
       <CardSubtitle title={channelTitle}>by: {channelTitle}</CardSubtitle>
       <ImageWrapper>
@@ -83,6 +89,7 @@ function FrontCardSide(props: CardProps) {
         <CardDescription title={description}>{description}</CardDescription>
         <CardDate>{publishedAt}</CardDate>
       </CardContent>
+      <StyledButton type="button">show more info</StyledButton>
     </FrontSideContainer>
   );
 }

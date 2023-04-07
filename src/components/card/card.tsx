@@ -23,7 +23,7 @@ interface IContainerProps {
 const CardContainer = styled.div<IContainerProps>`
   position: relative;
   width: 20rem;
-  height: 400px;
+  height: 450px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -59,13 +59,14 @@ function Card(props: ICardProps): JSX.Element {
   }, []);
 
   return (
-    <CardContainer isFrontShown={isFrontShown} onClick={handleRotate}>
+    <CardContainer isFrontShown={isFrontShown}>
       <FrontCardSide
         title={title}
         description={description}
         imageUrl={imageUrl}
         publishedAt={publishedAt}
         channelTitle={channelTitle}
+        onRotate={handleRotate}
       />
       <BackCardSide
         title={title}
@@ -74,6 +75,7 @@ function Card(props: ICardProps): JSX.Element {
         markMeAsCreator={markMeAsCreator}
         confirmData={confirmData}
         notifications={notifications}
+        onRotate={handleRotate}
       />
     </CardContainer>
   );
