@@ -4,7 +4,7 @@ import SearchBar from './searchBar';
 
 describe('<SearchBar />', () => {
   test('SearchBar mounts properly', () => {
-    const searchBar = render(<SearchBar />);
+    const searchBar = render(<SearchBar searchValue="" onInputChange={(): void => {}} />);
 
     expect(searchBar).toBeTruthy();
 
@@ -18,6 +18,6 @@ describe('<SearchBar />', () => {
 
     fireEvent.change(input, { target: { value: 'test' } });
 
-    expect(input?.value).toBe('test');
+    expect(input?.value).toBe('');
   });
 });

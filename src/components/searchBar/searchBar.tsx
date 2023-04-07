@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect } from 'react';
 import styled from 'styled-components';
 import LocalStorageService, {
   DEFAULT_LOCAL_STORAGE_KEY,
@@ -20,15 +20,18 @@ const SearchBarButton = styled(StyledButton)`
   color: ${color('neutral.button_text')};
 `;
 
-function SearchBar(): JSX.Element {
-  const [searchValue, setSearchValue] = useState<string>(
-    LocalStorageService.getItem<string>(DEFAULT_LOCAL_STORAGE_KEY) || ''
-  );
+interface ISearchBarProps {
+  searchValue: string;
+  onInputChange: (searchValue: string) => void;
+}
+
+function SearchBar(props: ISearchBarProps): JSX.Element {
+  const { searchValue, onInputChange } = props;
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
-    setSearchValue(value);
+    onInputChange(value);
   };
 
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
