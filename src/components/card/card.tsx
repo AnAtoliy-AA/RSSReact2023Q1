@@ -5,6 +5,7 @@ import BackCardSide from './backSide';
 import FrontCardSide from './frontSide';
 
 export interface ICardProps {
+  videoId?: string;
   title?: string;
   channelTitle?: string;
   imageUrl?: string;
@@ -14,6 +15,7 @@ export interface ICardProps {
   markMeAsCreator?: string;
   confirmData?: string;
   notifications?: string;
+  onGetInfo?: (videoId: string) => Promise<void>;
 }
 
 interface IContainerProps {
@@ -37,11 +39,11 @@ const CardContainer = styled.div<IContainerProps>`
   transition: 300ms;
   background-color: ${color('neutral.card_background')};
   box-shadow: 5px ${color('neutral.shadow')};
-  cursor: pointer;
 `;
 
 function Card(props: ICardProps): JSX.Element {
   const {
+    videoId,
     title,
     channelTitle,
     imageUrl,
@@ -51,6 +53,7 @@ function Card(props: ICardProps): JSX.Element {
     markMeAsCreator,
     confirmData,
     notifications,
+    onGetInfo,
   } = props;
   const [isFrontShown, setIsFrontShown] = useState<boolean>(true);
 
@@ -58,15 +61,23 @@ function Card(props: ICardProps): JSX.Element {
     setIsFrontShown((prev) => !prev);
   }, []);
 
+  const handleGetInfo = useCallback(() => {
+    if (onGetInfo && videoId) {
+      onGetInfo(videoId);
+    }
+  }, [onGetInfo, videoId]);
+
   return (
     <CardContainer isFrontShown={isFrontShown}>
       <FrontCardSide
+        videoId={videoId}
         title={title}
         description={description}
         imageUrl={imageUrl}
         publishedAt={publishedAt}
         channelTitle={channelTitle}
         onRotate={handleRotate}
+        onGetInfo={handleGetInfo}
       />
       <BackCardSide
         title={title}

@@ -10,7 +10,9 @@ export interface CardProps {
   imageUrl?: string;
   description?: string;
   publishedAt?: string;
+  videoId?: string;
   onRotate?: VoidFunction;
+  onGetInfo?: VoidFunction;
 }
 
 export const SideCardContainer = styled.div`
@@ -73,7 +75,8 @@ const CardDescription = styled.p`
 const CardDate = styled.div``;
 
 function FrontCardSide(props: CardProps) {
-  const { title, channelTitle, imageUrl, description, publishedAt, onRotate } = props;
+  const { title, channelTitle, imageUrl, description, publishedAt, videoId, onRotate, onGetInfo } =
+    props;
 
   return (
     <FrontSideContainer>
@@ -89,7 +92,11 @@ function FrontCardSide(props: CardProps) {
         <CardDescription title={description}>{description}</CardDescription>
         <CardDate>{publishedAt}</CardDate>
       </CardContent>
-      <StyledButton type="button">show more info</StyledButton>
+      {videoId && (
+        <StyledButton type="button" onClick={onGetInfo}>
+          show more info
+        </StyledButton>
+      )}
     </FrontSideContainer>
   );
 }

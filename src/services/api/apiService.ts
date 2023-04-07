@@ -1,3 +1,4 @@
+import getAdditionalInfoApi from '@api/getAdditionalInfo/getAdditionalInfo';
 import getSearchResultsApi from '@api/getSearchResults';
 import CardService from '@services/card/card.service';
 
@@ -17,6 +18,20 @@ class ApiService {
     } = searchParams;
 
     const values = await getSearchResultsApi({ searchValue, page, resultsPerPage });
+
+    const { items } = values;
+
+    if (Array.isArray(items)) {
+      return CardService.formatCardsData(items);
+    }
+
+    return [];
+  }
+
+  static async getAdditionalInfo(searchId?: string) {
+    if (!searchId) return [];
+
+    const values = await getAdditionalInfoApi(searchId);
 
     const { items } = values;
 

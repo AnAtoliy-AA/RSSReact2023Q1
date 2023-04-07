@@ -7,6 +7,7 @@ const StyledButton = styled.button`
   padding: 0.5rem 1rem;
   background-color: ${color('neutral.button_background')};
   white-space: nowrap;
+  cursor: pointer;
 `;
 
 export default StyledButton;
