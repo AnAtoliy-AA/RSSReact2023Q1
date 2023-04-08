@@ -6,6 +6,7 @@ import { useCallback, useEffect, useState } from 'react';
 import LocalStorageService, {
   DEFAULT_LOCAL_STORAGE_KEY,
 } from '@services/localStorage/localStorage.service';
+import useDebounce from '@hooks/useDebounce';
 
 function MainPage() {
   const [searchValue, setSearchValue] = useState<string>(
@@ -13,9 +14,9 @@ function MainPage() {
   );
   const [formattedCards, setFormattedCards] = useState<Array<ICardValues>>([]);
 
-  useEffect(() => {
+  const getSearchValueData = useCallback((searchTerm: string) => {
     async function getData() {
-      const cards = await ApiService.getSearchValues({ searchValue });
+      const cards = await ApiService.getSearchValues({ searchValue: searchTerm });
 
       if (Array.isArray(cards)) {
         setFormattedCards(cards);
@@ -23,7 +24,20 @@ function MainPage() {
     }
 
     getData();
-  }, [searchValue]);
+  }, []);
+
+  const debouncedSearchTerm = useDebounce<string>(searchValue);
+
+  useEffect(() => {
+    getSearchValueData(debouncedSearchTerm);
+  }, [debouncedSearchTerm, getSearchValueData]);
+
+  const handleOnInputSubmit = useCallback(
+    (searchTerm: string) => {
+      getSearchValueData(searchTerm);
+    },
+    [getSearchValueData]
+  );
 
   const handleOnSearchBarChange = useCallback((_searchValue: string) => {
     setSearchValue(_searchValue);
@@ -31,7 +45,11 @@ function MainPage() {
 
   return (
     <>
-      <SearchBar searchValue={searchValue} onInputChange={handleOnSearchBarChange} />
+      <SearchBar
+        searchValue={searchValue}
+        onInputChange={handleOnSearchBarChange}
+        onInputSubmit={handleOnInputSubmit}
+      />
       <CardsList formattedCards={formattedCards} />
     </>
   );

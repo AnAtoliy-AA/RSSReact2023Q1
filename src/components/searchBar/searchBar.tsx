@@ -23,10 +23,11 @@ const SearchBarButton = styled(StyledButton)`
 interface ISearchBarProps {
   searchValue: string;
   onInputChange: (searchValue: string) => void;
+  onInputSubmit: (searchValue: string) => void;
 }
 
 function SearchBar(props: ISearchBarProps): JSX.Element {
-  const { searchValue, onInputChange } = props;
+  const { searchValue, onInputChange, onInputSubmit } = props;
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -36,6 +37,10 @@ function SearchBar(props: ISearchBarProps): JSX.Element {
 
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    const searchText = (event?.currentTarget?.[0] as HTMLInputElement)?.value;
+
+    onInputSubmit(searchText);
   };
 
   useEffect(() => {
@@ -46,7 +51,7 @@ function SearchBar(props: ISearchBarProps): JSX.Element {
 
   return (
     <SearchContainer onSubmit={handleOnSubmit}>
-      <SearchBarInput value={searchValue} onChange={handleInputChange} />
+      <SearchBarInput value={searchValue} name="searchInput" onChange={handleInputChange} />
       <SearchBarButton type="submit">Search</SearchBarButton>
     </SearchContainer>
   );
