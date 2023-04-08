@@ -1,5 +1,6 @@
 import Card from '@components/card/card';
 import CardModal from '@components/card/cardModal';
+import WaveAnimation from '@components/waveAnimation/waveAnimation';
 import ApiService from '@services/api/apiService';
 import { ICardValues } from '@services/card/card.service';
 import color from '@utils/styles/stylesUtils';
@@ -15,17 +16,19 @@ const CardContainer = styled.div`
 
 interface CardListProps {
   formattedCards: Array<ICardValues>;
+  isLoading?: boolean;
 }
 
-function CardsList(props: CardListProps) {
-  const { formattedCards } = props;
+function CardsList({ formattedCards, isLoading }: CardListProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isInfoLoading, setIsInfoLoading] = useState<boolean>(!!isLoading);
 
   const [additionalInfo, setAdditionalInfo] = useState<ICardValues>();
 
   const handleGetInfo = useCallback(async (videoId: string) => {
+    setIsInfoLoading(true);
     const additionalInfoArray = await ApiService.getAdditionalInfo(videoId);
-
+    setIsInfoLoading(false);
     if (Array.isArray(additionalInfoArray) && additionalInfoArray.length) {
       setIsModalOpen(true);
       setAdditionalInfo(additionalInfoArray?.[0]);
@@ -37,43 +40,50 @@ function CardsList(props: CardListProps) {
   }, []);
 
   return (
-    <CardContainer>
-      {isModalOpen && (
-        <CardModal description={additionalInfo?.description} onClose={handleCLoseModal} />
-      )}
-      {formattedCards?.map((cardValues) => {
-        const {
-          id,
-          title,
-          description,
-          imageUrl,
-          publishedAt,
-          channelTitle,
-          priority,
-          markMeAsCreator,
-          confirmData,
-          notifications,
-        } = cardValues;
+    <>
+      {(isInfoLoading || isLoading) && <WaveAnimation />}
+      <CardContainer>
+        {isModalOpen && (
+          <CardModal description={additionalInfo?.description} onClose={handleCLoseModal} />
+        )}
+        {formattedCards?.map((cardValues) => {
+          const {
+            id,
+            title,
+            description,
+            imageUrl,
+            publishedAt,
+            channelTitle,
+            priority,
+            markMeAsCreator,
+            confirmData,
+            notifications,
+          } = cardValues;
 
-        return (
-          <Card
-            key={id}
-            videoId={id}
-            title={title}
-            description={description}
-            imageUrl={imageUrl}
-            publishedAt={publishedAt}
-            channelTitle={channelTitle}
-            priority={priority}
-            markMeAsCreator={markMeAsCreator}
-            confirmData={confirmData}
-            notifications={notifications}
-            onGetInfo={handleGetInfo}
-          />
-        );
-      })}
-    </CardContainer>
+          return (
+            <Card
+              key={id}
+              videoId={id}
+              title={title}
+              description={description}
+              imageUrl={imageUrl}
+              publishedAt={publishedAt}
+              channelTitle={channelTitle}
+              priority={priority}
+              markMeAsCreator={markMeAsCreator}
+              confirmData={confirmData}
+              notifications={notifications}
+              onGetInfo={handleGetInfo}
+            />
+          );
+        })}
+      </CardContainer>
+    </>
   );
 }
+
+CardsList.defaultProps = {
+  isLoading: false,
+};
 
 export default CardsList;

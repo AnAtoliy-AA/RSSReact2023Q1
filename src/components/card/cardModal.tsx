@@ -18,10 +18,11 @@ export interface ICardModalProps {
 }
 
 const CardModalContainer = styled.div`
-  position: absolute;
-  width: 100vw;
-  height: 100vh;
+  position: fixed;
+  width: 60vw;
+  height: 60vh;
   background-color: ${color('neutral.card_background')};
+  border-radius: 1rem;
   z-index: 20;
 `;
 
