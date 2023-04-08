@@ -85,6 +85,8 @@ const darkPalette = {
 const darkTheme = {
   primary: {
     text: darkPalette.primary[OpacityVars.PRE_MAX],
+    wave_animation_start: darkPalette.primary[OpacityVars.MAX],
+    wave_animation_end: darkPalette.primary[OpacityVars.MIN],
   },
   neutral: {
     background: darkPalette.neutral[OpacityVars.MAX],

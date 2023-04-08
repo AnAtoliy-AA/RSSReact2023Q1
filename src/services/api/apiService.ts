@@ -19,7 +19,7 @@ class ApiService {
 
     const values = await getSearchResultsApi({ searchValue, page, resultsPerPage });
 
-    const { items } = values;
+    const items = values?.items;
 
     if (Array.isArray(items)) {
       return CardService.formatCardsData(items);
@@ -33,7 +33,7 @@ class ApiService {
 
     const values = await getAdditionalInfoApi(searchId);
 
-    const { items } = values;
+    const items = values?.items;
 
     if (Array.isArray(items)) {
       return CardService.formatCardsData(items);
