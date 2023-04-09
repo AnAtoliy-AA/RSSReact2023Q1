@@ -44,7 +44,19 @@ function CardsList({ formattedCards, isLoading }: CardListProps) {
       {(isInfoLoading || isLoading) && <WaveAnimation />}
       <CardContainer>
         {isModalOpen && (
-          <CardModal description={additionalInfo?.description} onClose={handleCLoseModal} />
+          <CardModal
+            title={additionalInfo?.title}
+            channelTitle={additionalInfo?.channelTitle}
+            description={additionalInfo?.description}
+            imageUrl={additionalInfo?.imageUrl}
+            publishedAt={additionalInfo?.publishedAt}
+            viewCount={additionalInfo?.viewCount}
+            likeCount={additionalInfo?.likeCount}
+            favoriteCount={additionalInfo?.favoriteCount}
+            commentCount={additionalInfo?.commentCount}
+            tags={additionalInfo?.tags}
+            onClose={handleCLoseModal}
+          />
         )}
         {formattedCards?.map((cardValues) => {
           const {

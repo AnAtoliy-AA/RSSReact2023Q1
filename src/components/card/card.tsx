@@ -15,6 +15,11 @@ export interface ICardProps {
   markMeAsCreator?: string;
   confirmData?: string;
   notifications?: string;
+  viewCount?: string | number;
+  likeCount?: string | number;
+  favoriteCount?: string | number;
+  commentCount?: string | number;
+  tags?: Array<string>;
   onGetInfo?: (videoId: string) => Promise<void>;
 }
 

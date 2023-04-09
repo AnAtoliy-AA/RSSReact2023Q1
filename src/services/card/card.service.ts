@@ -11,10 +11,12 @@ class CardService {
   }
 
   private static formatCardData(item: ISearchItem): ICardValues {
-    const { snippet } = item;
-    const { title, description, channelTitle, publishedAt, thumbnails } = snippet || {};
+    const { snippet, statistics } = item;
+    const { title, description, channelTitle, publishedAt, thumbnails, tags } = snippet || {};
     const imageUrl = thumbnails?.medium?.url || '';
     const id = item?.id?.videoId || `${title}_${channelTitle}`;
+
+    const { viewCount, likeCount, favoriteCount, commentCount } = statistics || {};
 
     return {
       id,
@@ -23,6 +25,11 @@ class CardService {
       imageUrl,
       description,
       publishedAt,
+      viewCount,
+      likeCount,
+      favoriteCount,
+      commentCount,
+      tags,
     };
   }
 }
