@@ -13,6 +13,7 @@ function MainPage() {
   );
   const [formattedCards, setFormattedCards] = useState<Array<ICardValues>>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isResponseError, setIsResponseError] = useState<boolean>(false);
 
   const getSearchValueData = useCallback((searchTerm: string) => {
     async function getData() {
@@ -20,7 +21,10 @@ function MainPage() {
       const cards = await ApiService.getSearchValues({ searchValue: searchTerm });
       setIsLoading(false);
       if (Array.isArray(cards)) {
+        setIsResponseError(false);
         setFormattedCards(cards);
+      } else {
+        setIsResponseError(true);
       }
     }
 
@@ -50,6 +54,9 @@ function MainPage() {
         onInputChange={handleOnSearchBarChange}
         onInputSubmit={handleOnInputSubmit}
       />
+      {isResponseError && (
+        <h2>Please, wait few hours before free api key search request qouta will be updated</h2>
+      )}
       <CardsList formattedCards={formattedCards} isLoading={isLoading} />
     </>
   );

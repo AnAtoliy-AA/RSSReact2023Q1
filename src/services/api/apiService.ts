@@ -25,7 +25,7 @@ class ApiService {
       return CardService.formatCardsData(items);
     }
 
-    return [];
+    return null;
   }
 
   static async getAdditionalInfo(searchId?: string) {
