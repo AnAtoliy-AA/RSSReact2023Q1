@@ -1,8 +1,5 @@
-import { ChangeEvent, FormEvent, useEffect } from 'react';
+import { ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
-import LocalStorageService, {
-  DEFAULT_LOCAL_STORAGE_KEY,
-} from '@services/localStorage/localStorage.service';
 import color from '@utils/styles/stylesUtils';
 import StyledButton from '@components/styledButton/styledButton';
 
@@ -42,12 +39,6 @@ function SearchBar(props: ISearchBarProps): JSX.Element {
 
     onInputSubmit(searchText);
   };
-
-  useEffect(() => {
-    return () => {
-      LocalStorageService.setItem<string>(DEFAULT_LOCAL_STORAGE_KEY, searchValue);
-    };
-  }, [searchValue]);
 
   return (
     <SearchContainer onSubmit={handleOnSubmit}>

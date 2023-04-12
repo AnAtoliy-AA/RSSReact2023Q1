@@ -2,7 +2,7 @@ import SearchBar from '@components/searchBar/searchBar';
 import CardsList from '@components/cardsList/cardsList';
 import { ICardValues } from '@services/card/card.service';
 import ApiService from '@services/api/apiService';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import LocalStorageService, {
   DEFAULT_LOCAL_STORAGE_KEY,
 } from '@services/localStorage/localStorage.service';
@@ -29,10 +29,15 @@ function MainPage() {
 
   const handleOnInputSubmit = useCallback(
     (searchTerm: string) => {
+      LocalStorageService.setItem<string>(DEFAULT_LOCAL_STORAGE_KEY, searchTerm);
       getSearchValueData(searchTerm);
     },
     [getSearchValueData]
   );
+
+  useEffect(() => {
+    getSearchValueData(LocalStorageService.getItem<string>(DEFAULT_LOCAL_STORAGE_KEY) || '');
+  }, [getSearchValueData]);
 
   const handleOnSearchBarChange = useCallback((_searchValue: string) => {
     setSearchValue(_searchValue);
