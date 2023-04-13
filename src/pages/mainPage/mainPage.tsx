@@ -40,7 +40,8 @@ function MainPage() {
   );
 
   useEffect(() => {
-    getSearchValueData(LocalStorageService.getItem<string>(DEFAULT_LOCAL_STORAGE_KEY) || '');
+    // TODO uncomment before release deployment (commented to save fre api key quota)
+    // getSearchValueData(LocalStorageService.getItem<string>(DEFAULT_LOCAL_STORAGE_KEY) || '');
   }, [getSearchValueData]);
 
   const handleOnSearchBarChange = useCallback((_searchValue: string) => {
