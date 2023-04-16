@@ -1,10 +1,16 @@
 import { describe, test, expect } from 'vitest';
 import { render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { store } from '@store/store';
 import CreateCardPage from './newCardPage';
 
 describe('<CreateCardPage />', () => {
   test('CreateCardPage mounts properly', () => {
-    const createCardPage = render(<CreateCardPage />);
+    const createCardPage = render(
+      <Provider store={store}>
+        <CreateCardPage />
+      </Provider>
+    );
 
     expect(createCardPage).toBeTruthy();
 

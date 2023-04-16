@@ -2,6 +2,8 @@ import { describe, test, expect } from 'vitest';
 import { fireEvent, getByText, render } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 import APP_PATHS from '@constants/appPath/appPath';
+import { Provider } from 'react-redux';
+import { store } from '@store/store';
 import Router from './router';
 
 enum Buttons {
@@ -17,9 +19,11 @@ enum ChildNodes {
 describe('<Router />', () => {
   test('Router mounts properly', () => {
     const wrapper = render(
-      <MemoryRouter initialEntries={[APP_PATHS.HOME]}>
-        <Router />
-      </MemoryRouter>
+      <Provider store={store}>
+        <MemoryRouter initialEntries={[APP_PATHS.HOME]}>
+          <Router />
+        </MemoryRouter>
+      </Provider>
     );
 
     expect(wrapper).toBeTruthy();

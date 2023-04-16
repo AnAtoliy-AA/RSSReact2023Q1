@@ -1,10 +1,16 @@
 import { describe, test, expect } from 'vitest';
 import { fireEvent, render } from '@testing-library/react';
+import { Provider } from 'react-redux';
+import { store } from '@store/store';
 import SearchBar from './searchBar';
 
 describe('<SearchBar />', () => {
   test('SearchBar mounts properly', () => {
-    const searchBar = render(<SearchBar onInputSubmit={(): void => {}} />);
+    const searchBar = render(
+      <Provider store={store}>
+        <SearchBar onInputSubmit={(): void => {}} />
+      </Provider>
+    );
 
     expect(searchBar).toBeTruthy();
 
@@ -18,6 +24,6 @@ describe('<SearchBar />', () => {
 
     fireEvent.change(input, { target: { value: 'test' } });
 
-    expect(input?.value).toBe('');
+    expect(input?.value).toBe('test');
   });
 });
