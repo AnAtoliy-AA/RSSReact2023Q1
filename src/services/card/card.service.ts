@@ -7,7 +7,7 @@ export interface ICardValues extends ICardProps {
 
 class CardService {
   static formatCardsData(data: Array<ISearchItem> = []) {
-    return data.map((item: ISearchItem) => this.formatCardData(item));
+    return data?.map((item: ISearchItem) => this.formatCardData(item));
   }
 
   private static formatCardData(item: ISearchItem): ICardValues {

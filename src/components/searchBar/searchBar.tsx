@@ -2,6 +2,9 @@ import { ChangeEvent, FormEvent } from 'react';
 import styled from 'styled-components';
 import color from '@utils/styles/stylesUtils';
 import StyledButton from '@components/styledButton/styledButton';
+import { RootState } from '@store/store';
+import { changeValue } from '@store/slices/searchSlice/searchSlice';
+import { useAppDispatch, useAppSelector } from '@hooks/reduxHooks';
 
 const SearchContainer = styled.form`
   flex-grow: 3;
@@ -18,18 +21,18 @@ const SearchBarButton = styled(StyledButton)`
 `;
 
 interface ISearchBarProps {
-  searchValue: string;
-  onInputChange: (searchValue: string) => void;
   onInputSubmit: (searchValue: string) => void;
 }
 
 function SearchBar(props: ISearchBarProps): JSX.Element {
-  const { searchValue, onInputChange, onInputSubmit } = props;
+  const { onInputSubmit } = props;
+  const { searchValue } = useAppSelector((state: RootState) => state.search);
+  const dispatch = useAppDispatch();
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
 
-    onInputChange(value);
+    dispatch(changeValue(value));
   };
 
   const handleOnSubmit = (event: FormEvent<HTMLFormElement>) => {

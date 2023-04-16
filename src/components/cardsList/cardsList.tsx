@@ -1,8 +1,8 @@
 import Card from '@components/card/card';
 import CardModal from '@components/card/cardModal';
 import WaveAnimation from '@components/waveAnimation/waveAnimation';
-import ApiService from '@services/api/apiService';
-import { ICardValues } from '@services/card/card.service';
+import { useGetAdditionalInfoByIdQuery } from '@services/api/searchService';
+import CardService, { ICardValues } from '@services/card/card.service';
 import color from '@utils/styles/stylesUtils';
 import { useState, useCallback } from 'react';
 import styled from 'styled-components';
@@ -21,18 +21,18 @@ interface CardListProps {
 
 function CardsList({ formattedCards, isLoading }: CardListProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isInfoLoading, setIsInfoLoading] = useState<boolean>(!!isLoading);
+  const [skip, setSkip] = useState<boolean>(true);
+  const [videoId, setVideoId] = useState<string>();
+  const { data, isFetching } = useGetAdditionalInfoByIdQuery(videoId, {
+    skip,
+  });
+  const additionalInfoArray = CardService.formatCardsData(data?.items);
+  const additionalInfo = additionalInfoArray?.[0];
 
-  const [additionalInfo, setAdditionalInfo] = useState<ICardValues>();
-
-  const handleGetInfo = useCallback(async (videoId: string) => {
-    setIsInfoLoading(true);
-    const additionalInfoArray = await ApiService.getAdditionalInfo(videoId);
-    setIsInfoLoading(false);
-    if (Array.isArray(additionalInfoArray) && additionalInfoArray.length) {
-      setIsModalOpen(true);
-      setAdditionalInfo(additionalInfoArray?.[0]);
-    }
+  const handleGetInfo = useCallback((id: string) => {
+    setVideoId(id);
+    setSkip(false);
+    setIsModalOpen(true);
   }, []);
 
   const handleCLoseModal = useCallback(() => {
@@ -41,7 +41,7 @@ function CardsList({ formattedCards, isLoading }: CardListProps) {
 
   return (
     <>
-      {(isInfoLoading || isLoading) && <WaveAnimation />}
+      {(isFetching || isLoading) && <WaveAnimation />}
       <CardContainer>
         {isModalOpen && (
           <CardModal

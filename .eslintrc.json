@@ -17,6 +17,7 @@
         "node": true
     },
     "root": true,
+    "ignorePatterns": ["src/constants/baseUrl.d.ts"],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true

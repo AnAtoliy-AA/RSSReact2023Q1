@@ -20,7 +20,7 @@ export interface ICardProps {
   favoriteCount?: string | number;
   commentCount?: string | number;
   tags?: Array<string>;
-  onGetInfo?: (videoId: string) => Promise<void>;
+  onGetInfo?: (videoId: string) => void;
 }
 
 interface IContainerProps {
