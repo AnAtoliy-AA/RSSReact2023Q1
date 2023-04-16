@@ -1,6 +1,6 @@
-import { ICardValues } from '@services/card/card.service';
-import { useCallback, useState } from 'react';
 import styled from 'styled-components';
+import { RootState } from '@store/store';
+import { useAppSelector } from '@hooks/reduxHooks';
 import CardsList from '../../components/cardsList/cardsList';
 import CustomForm from './customForm';
 
@@ -15,16 +15,12 @@ const PageWrapper = styled.div`
 const PageTitle = styled.h2``;
 
 function NewCardPage(): JSX.Element {
-  const [formattedCards, setFormattedCards] = useState<Array<ICardValues>>([]);
-
-  const addCard = useCallback((card: ICardValues) => {
-    setFormattedCards((prev) => [...prev, card]);
-  }, []);
+  const { formattedCards } = useAppSelector((state: RootState) => state.form);
 
   return (
     <PageWrapper>
       <PageTitle>Create new card</PageTitle>
-      <CustomForm addCard={addCard} />
+      <CustomForm />
       <CardsList formattedCards={formattedCards} />
     </PageWrapper>
   );

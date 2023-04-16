@@ -22,15 +22,15 @@ interface CardListProps {
 function CardsList({ formattedCards, isLoading }: CardListProps) {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(true);
-  const [videoId, setVideoId] = useState<string>();
-  const { data, isFetching } = useGetAdditionalInfoByIdQuery(videoId, {
+  const [activeVideoId, setActiveVideoId] = useState<string>('');
+  const { data, isFetching } = useGetAdditionalInfoByIdQuery(activeVideoId, {
     skip,
   });
   const additionalInfoArray = CardService.formatCardsData(data?.items);
   const additionalInfo = additionalInfoArray?.[0];
 
   const handleGetInfo = useCallback((id: string) => {
-    setVideoId(id);
+    setActiveVideoId(id);
     setSkip(false);
     setIsModalOpen(true);
   }, []);
@@ -61,6 +61,7 @@ function CardsList({ formattedCards, isLoading }: CardListProps) {
         {formattedCards?.map((cardValues) => {
           const {
             id,
+            videoId,
             title,
             description,
             imageUrl,
@@ -75,7 +76,7 @@ function CardsList({ formattedCards, isLoading }: CardListProps) {
           return (
             <Card
               key={id}
-              videoId={id}
+              videoId={videoId}
               title={title}
               description={description}
               imageUrl={imageUrl}

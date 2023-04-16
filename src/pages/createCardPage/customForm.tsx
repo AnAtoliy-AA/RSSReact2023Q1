@@ -5,6 +5,8 @@ import { ICardValues } from '@services/card/card.service';
 import FormService, { ICardDataOpts } from '@services/form/formService';
 import color from '@utils/styles/stylesUtils';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useAppDispatch } from '@hooks/reduxHooks';
+import { addCard } from '@store/slices/formSlice/formSlice';
 import CustomFormControl from './formControl';
 
 const CreteForm = styled.form`
@@ -21,16 +23,12 @@ const CreateMessage = styled.p`
 
 const SubmitForm = styled(StyledButton)``;
 
-interface CreateCardProps {
-  addCard: (card: ICardValues) => void;
-}
-
 const DEFAULT_MESSAGE_TIME = 2 * 1000;
 
-function CustomForm(props: CreateCardProps): JSX.Element {
-  const { addCard } = props;
-
+function CustomForm(): JSX.Element {
   const [isCardCreated, setIsCardCreated] = useState<boolean>(false);
+
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -54,7 +52,9 @@ function CustomForm(props: CreateCardProps): JSX.Element {
 
   const onSubmit: SubmitHandler<FieldValues> = (formData) => {
     const newCardData = FormService.createCardItemDto(formData as ICardDataOpts);
-    addCard(newCardData as ICardValues);
+
+    dispatch(addCard(newCardData as ICardValues));
+
     setIsCardCreated(true);
 
     timerRef.current = setTimeout(() => {

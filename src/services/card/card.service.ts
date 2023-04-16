@@ -14,12 +14,14 @@ class CardService {
     const { snippet, statistics } = item;
     const { title, description, channelTitle, publishedAt, thumbnails, tags } = snippet || {};
     const imageUrl = thumbnails?.medium?.url || '';
-    const id = item?.id?.videoId || `${title}_${channelTitle}`;
+    const videoId = item?.id?.videoId;
+    const id = videoId || `${title}_${channelTitle}`;
 
     const { viewCount, likeCount, favoriteCount, commentCount } = statistics || {};
 
     return {
       id,
+      videoId,
       title,
       channelTitle,
       imageUrl,
