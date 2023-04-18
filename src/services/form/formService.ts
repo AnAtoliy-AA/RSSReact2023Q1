@@ -73,7 +73,16 @@ class FormService {
     const id = uuidv4();
     const imageUrl = image?.length ? URL.createObjectURL(image?.[0]) : '';
 
-    return { id, imageUrl, ...opts };
+    const optsCopy = this.removeImage(opts);
+
+    return { id, imageUrl, ...optsCopy };
+  }
+
+  private static removeImage(opts: ICardDataOpts): ICardDataOpts {
+    const optsCopy = structuredClone(opts);
+    delete optsCopy.image;
+
+    return optsCopy;
   }
 
   static inputsArrayVocabulary: Readonly<Array<IInputValues>> = [
