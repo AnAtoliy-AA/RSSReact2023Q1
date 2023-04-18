@@ -3,9 +3,12 @@ import CardsList from '@components/cardsList/cardsList';
 import CardService from '@services/card/card.service';
 import { useCallback, useState } from 'react';
 import { useGetSearchResultsQuery } from '@services/api/searchService';
+import { useAppSelector } from '@hooks/reduxHooks';
+import { RootState } from '@store/store';
 
 function MainPage() {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const { searchValue: storeSearchValue } = useAppSelector((state: RootState) => state.search);
+  const [searchTerm, setSearchTerm] = useState<string>(storeSearchValue);
   const { data, isError, isFetching } = useGetSearchResultsQuery(searchTerm);
   const formattedCards = CardService.formatCardsData(data?.items);
 
