@@ -1,10 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import ApiPath from '@constants/apiPath/apiPath';
 import { ISearchResponse } from '@api/getSearchResults';
+import fetch from 'isomorphic-fetch';
 
 export const searchValueApi = createApi({
   reducerPath: 'searchApi',
-  baseQuery: fetchBaseQuery({ baseUrl: process.env.API_BASE_URL }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: process.env.API_BASE_URL,
+    fetchFn: fetch,
+  }),
   endpoints: (builder) => ({
     getSearchResults: builder.query<ISearchResponse, string>({
       query: (searchValue) =>

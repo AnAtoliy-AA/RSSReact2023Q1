@@ -2,6 +2,7 @@ import { defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react-swc';
 import { ghPages } from 'vite-plugin-gh-pages';
 import EnvironmentPlugin from 'vite-plugin-environment';
+import istanbul from "vite-plugin-istanbul";
 import * as path from 'path';
 import BASE_URL from './src/constants/baseUrl';
 
@@ -34,7 +35,10 @@ const aliasPathResolvers: Array<IAliasPathResolver> = Object.values(AliasPath).m
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react(), ghPages(), EnvironmentPlugin('all')],
+  plugins: [react(), ghPages(), EnvironmentPlugin('all'), istanbul({
+    cypress: true,
+    requireEnv: false,
+}),],
   base: BASE_URL,
   resolve: {
     alias: aliasPathResolvers,
@@ -44,5 +48,8 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./src/tests/setupTest.ts', 'vitest-localstorage-mock'],
     mockReset: false,
+  },
+  build: {
+    sourcemap: true,
   },
 });
